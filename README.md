@@ -56,7 +56,8 @@ like any other file under `.claude/rules/` — in every session, in subagents, a
 what it wrote and delete what you disagree with; the files are yours from then on.
 
 Update — auto-update is off for this marketplace unless you switch it on under `/plugin`. A plugin
-update never touches a project's rules; run `/coding:install-rules` again to compare and pull them in:
+update never touches a project's rules; run `/coding:install-rules` again to compare and pull them
+in:
 
 ```bash
 claude plugin marketplace update elnebuloso
@@ -76,9 +77,9 @@ claude plugin update coding@elnebuloso
 
 Some rules carry settings the project chooses at the first install: the rules that govern prose —
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
-answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where its pages live
-(default `docs/handbook`). The answers stay
-in the installed files, and updates keep them.
+answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where
+its pages live (default `docs/handbook`). The answers stay in the installed files, and updates keep
+them.
 
 ## Skills
 
@@ -90,12 +91,12 @@ would change and gets an explicit yes — the project's own edits would be lost.
 
 ### Project code review – `/coding:project-code-review`
 
-Reviews the codebase as it stands, not a diff — through the eyes of a senior developer who would have
-to take the project over, measured against the project's own rules. Writes one report to
+Reviews the codebase as it stands, not a diff — through the eyes of a senior developer who would
+have to take the project over, measured against the project's own rules. Writes one report to
 `docs/reviews/`; changes no source file.
 
 ### Consolidate ADRs – `/coding:adrs-consolidate`
 
-Merges the ADRs in the directory the installed `adrs` rule names into a set that holds only the decisions in force today;
-superseded ones drop out and the old files are deleted. Works in phases and stops for approval
-before anything is deleted.
+Merges the ADRs in the directory the installed `adrs` rule names into a set that holds only the
+decisions in force today; superseded ones drop out and the old files are deleted. Works in phases
+and stops for approval before anything is deleted.
