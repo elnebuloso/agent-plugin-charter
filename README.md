@@ -35,7 +35,8 @@ claude plugin update coding@elnebuloso
 
 Some rules carry settings the project chooses at the first install: the rules that govern prose —
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
-answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`). The answers stay
+answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where its pages live
+(default `docs/handbook`). The answers stay
 in the installed files, and updates keep them.
 
 ## Skills

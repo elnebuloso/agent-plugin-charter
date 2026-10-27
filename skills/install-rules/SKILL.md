@@ -19,6 +19,7 @@ A rule may carry settings the project chooses, written as `<UPPERCASE_NAME>`:
 - `<LANGUAGE>` — the language the rule's prose is written in. No default: offer
   the language most of the project's prose is in.
 - `<ADR_DIRECTORY>` — where the ADRs live. Default `docs/decisions`.
+- `<HANDBOOK_DIRECTORY>` — where the handbook pages live. Default `docs/handbook`.
 
 A setting is chosen once. The project's existing copy of a rule holds the values
 it was installed with — read them from the place the placeholder sits in the

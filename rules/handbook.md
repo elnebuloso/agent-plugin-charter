@@ -1,6 +1,6 @@
 # Writing handbook pages
 
-The handbook is what a reader of the product reads. It lives in `docs/handbook/` and is written to
+The handbook is what a reader of the product reads. It lives in `<HANDBOOK_DIRECTORY>/` and is written to
 be published on its own one day.
 
 - **Handbook pages are written in `<LANGUAGE>`.** An English-in-source rule governs code, comments,
