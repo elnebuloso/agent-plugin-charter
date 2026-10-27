@@ -2,6 +2,47 @@
 
 Rules and skills for coding agents — pick the rules your project needs, installed as files you own.
 
+## Why rules you install beat rules a plugin injects
+
+Every project's `CLAUDE.md` tends to end up as a list of good intentions — *write clean code*,
+*keep it simple*. The model agrees with all of it and carries on as before, because none of it is a
+decision it can act on. The rules here are the other kind: specific enough to change what gets
+written.
+
+Getting such rules into a project through a plugin is the hard part. Claude Code plugins can ship
+skills, agents and hooks, but no rules — the usual workaround is a `SessionStart` hook that prints
+the rule text into every session. We built that first and tested it. It falls short:
+
+- **Subagents never see it.** Hook output reaches the main session only. A reviewer agent checking
+  code against the rules has no rules to check against — unless a second hook re-encodes the text
+  as JSON, which pulls in `jq` or a script.
+- **It needs a Unix shell.** On Windows without Git Bash, hooks run in PowerShell and the rule
+  silently never loads.
+- **One setting for every project.** Plugin options are stored per user, so a handbook in German
+  here and specs in English there is not possible.
+- **You can't edit it.** A rule you disagree with stays on, unless you switch off the whole plugin.
+- **Updates change your rules unread.** Every plugin update rewrites the rules in every project at
+  once.
+
+This plugin takes the other road: `/coding:install-rules` writes the rules into your project as
+plain files under `.claude/rules/agent-plugin-coding/`. From there, Claude Code does what it does
+with any rule file — and everything above turns around:
+
+- **Native.** Loaded at every session start, in every subagent, again after `/compact`. No hooks,
+  no shell, no `jq`; it works on Windows as it does anywhere.
+- **Your choice, per project.** You pick which rules a project gets. A project without ADRs never
+  carries the ADR rules.
+- **Settings per project, per rule.** Language, ADR directory, handbook directory — asked once,
+  kept in the file, kept on every update.
+- **Yours to edit.** Read what was written and delete what you disagree with. A rule you don't
+  actually want is worse than no rule, because the model will follow it.
+- **Updates you decide on.** Run `/coding:install-rules` again: it shows what the new version
+  changes and overwrites only on your yes.
+- **Shared through git.** Commit the files and the whole team works under the same rules — whether
+  or not they installed the plugin.
+- **Plain Markdown.** Nothing in a rule file is specific to Claude; the text reads the same to any
+  coding agent you point at it.
+
 ## Installation
 
 ```bash
