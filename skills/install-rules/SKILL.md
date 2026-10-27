@@ -43,6 +43,12 @@ state, the settings it holds, and — read from the rule itself — what it
 presumes, such as a tool or a practice the project must already have.
 Up-to-date rules need nothing further.
 
+Then look the other way: a file in `.claude/rules/agent-plugin-coding/` with no
+source of the same name is **no longer shipped** — the plugin renamed or dropped
+that rule, and the file keeps loading until it goes. List each one in the table
+with its heading. Only that directory is looked at; files elsewhere under
+`.claude/rules/` belong to the project.
+
 ## Ask
 
 Ask with `AskUserQuestion`, multi-select, which of the rules that are not up to
@@ -62,10 +68,15 @@ For each chosen rule in state **differs**, say in a few lines what the plugin's
 version would change — added, removed and reworded rules, not a full diff — and
 that overwriting drops the project's own edits. Write it only on an explicit yes.
 
+For files **no longer shipped**, ask with `AskUserQuestion`, multi-select, which
+to delete. Say what each one covers and, where a renamed rule replaces it, which
+one. Delete only what the user picks.
+
 ## Write
 
 Write each chosen rule exactly as it ships, with its settings filled in and
 nothing else changed: no rewording, no reformatting, no merging of two
-versions. Touch nothing else — no `CLAUDE.md`, no other file under `.claude/`.
-Then list what was written and with which settings. Committing it is the
+versions. Delete the no-longer-shipped files the user picked. Touch nothing else
+— no `CLAUDE.md`, no other file under `.claude/`. Then list what was written,
+with which settings, and what was deleted. Committing it is the
 user's call.
