@@ -1,0 +1,12 @@
+{
+  "name": "coding",
+  "version": "0.1.0",
+  "description": "Rules and skills for coding agents — pick the rules your project needs, installed as files you own.",
+  "author": {
+    "name": "elnebuloso",
+    "url": "https://github.com/elnebuloso"
+  },
+  "homepage": "https://github.com/elnebuloso/agent-plugin-coding",
+  "repository": "https://github.com/elnebuloso/agent-plugin-coding",
+  "license": "MIT"
+}

@@ -1,0 +1,63 @@
+---
+name: install-rules
+description: Installs or updates the plugin's rules in .claude/rules/agent-plugin-coding/ — asks which ones, and keeps the project's settings such as language and ADR directory across updates
+disable-model-invocation: true
+---
+
+Install the rule files this plugin ships into the project, so Claude Code loads
+them natively at every session start — subagents included.
+
+Source: every file in `${CLAUDE_PLUGIN_ROOT}/rules/`.
+Target: `.claude/rules/agent-plugin-coding/<same name>` at the root of the project this
+session runs in. Claude Code reads `.claude/rules/` recursively, so the subdirectory keeps
+these files apart from the project's own rules without changing how they load.
+
+## Settings
+
+A rule may carry settings the project chooses, written as `<UPPERCASE_NAME>`:
+
+- `<LANGUAGE>` — the language the rule's prose is written in. No default: offer
+  the language most of the project's prose is in.
+- `<ADR_DIRECTORY>` — where the ADRs live. Default `docs/decisions`.
+
+A setting is chosen once. The project's existing copy of a rule holds the values
+it was installed with — read them from the place the placeholder sits in the
+source. An update keeps them without asking again. Ask only for a setting the
+copy holds no value for: on a first install, or when a new version brings a new
+one. Each rule gets its own answers; a handbook in one language and specs in
+another is fine.
+
+## Take stock
+
+For each source file, check its target and sort it into one of three states:
+
+- **not installed** — no target file
+- **up to date** — the target equals the source with its settings filled in
+- **differs** — an older version, the project's own edits, or both
+
+Show the list in one short table: the rule's heading (its first line), the
+state, the settings it holds, and — read from the rule itself — what it
+presumes, such as a tool or a practice the project must already have.
+Up-to-date rules need nothing further.
+
+## Ask
+
+Ask with `AskUserQuestion`, multi-select, which of the rules that are not up to
+date to install or update. No question carries more than four options, so split
+the rules across questions where needed. A rule whose precondition is plainly
+missing here is still offered, but say so.
+
+Then ask for each setting the chosen rules still lack. Offer the default first
+where there is one; typing another value is always open.
+
+For each chosen rule in state **differs**, say in a few lines what the plugin's
+version would change — added, removed and reworded rules, not a full diff — and
+that overwriting drops the project's own edits. Write it only on an explicit yes.
+
+## Write
+
+Write each chosen rule exactly as it ships, with its settings filled in and
+nothing else changed: no rewording, no reformatting, no merging of two
+versions. Touch nothing else — no `CLAUDE.md`, no other file under `.claude/`.
+Then list what was written and with which settings. Committing it is the
+user's call.
