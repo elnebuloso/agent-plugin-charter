@@ -43,6 +43,9 @@ A new rule that fails one of them belongs in the discussion, not in a file.
 - The rules table lists every file in `rules/`; each skill in `skills/` has its own section,
   headed ``### <Name> – `/coding:<skill-name>` ``. Agents in `agents/` are building blocks of a
   skill and are described with it.
+- A skill section opens with its command in a `text` code block, so it can be copied. A skill
+  that takes arguments gets a `#### With arguments` subsection with one example call, again as a
+  code block.
 - A rule or skill and its README entry change in the same commit.
 
 ## Plugin description
