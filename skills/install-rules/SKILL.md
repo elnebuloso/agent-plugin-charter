@@ -2,6 +2,7 @@
 name: install-rules
 description: Installs or updates the plugin's rules in .claude/rules/agent-plugin-coding/ — asks which ones, and keeps the project's settings such as language and ADR directory across updates
 disable-model-invocation: true
+argument-hint: "[rule ...] [language]"
 ---
 
 Install the rule files this plugin ships into the project, so Claude Code loads
@@ -11,6 +12,23 @@ Source: every file in `${CLAUDE_PLUGIN_ROOT}/rules/`.
 Target: `.claude/rules/agent-plugin-coding/<same name>` at the root of the project this
 session runs in. Claude Code reads `.claude/rules/` recursively, so the subdirectory keeps
 these files apart from the project's own rules without changing how they load.
+
+## Arguments
+
+Arguments: $ARGUMENTS
+
+Both are optional, in any order:
+
+- **Rules** — a word that matches a source file name without `.md`, such as
+  `adrs`. The named rules are the chosen ones; the question which to install is
+  skipped. A word that matches no rule and is not a language is reported, not
+  guessed at.
+- **Language** — any other word, such as `German`. It is the `<LANGUAGE>` value
+  for every chosen rule, overriding the value a copy holds. Rules are written in
+  English, so the value is the language's English name: `Deutsch` becomes
+  `German`.
+
+Without arguments, everything is asked as described below.
 
 ## Settings
 
@@ -54,9 +72,11 @@ with its heading. Only that directory is looked at; files elsewhere under
 Ask with `AskUserQuestion`, multi-select, which of the rules that are not up to
 date to install or update. No question carries more than four options, so split
 the rules across questions where needed. A rule whose precondition is plainly
-missing here is still offered, but say so.
+missing here is still offered, but say so. Skip this question when rules were
+passed as arguments.
 
-Then ask for each setting the chosen rules still lack, every one of them with
+Then ask for each setting the chosen rules still lack — the language counts as
+given when passed as an argument — every one of them with
 `AskUserQuestion` — up to four settings in one call. Each question needs at
 least two options: for a directory, a directory the project already keeps such
 files in, then the default marked as such, then the common alternative, up to

@@ -91,6 +91,9 @@ would change and gets an explicit yes — the project's own edits would be lost.
 longer ships is listed too, and deleted on request; nothing outside
 `.claude/rules/agent-plugin-coding/` is touched.
 
+Rules and a language can be passed directly — `/coding:install-rules adrs handbook German` installs
+those two rules in German without asking which ones; settings still missing are asked for.
+
 ### Project code review – `/coding:project-code-review`
 
 Reviews the codebase as it stands, not a diff — through the eyes of a senior developer who would
