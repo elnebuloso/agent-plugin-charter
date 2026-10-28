@@ -50,10 +50,10 @@ claude plugin marketplace add elnebuloso/agent-plugins
 claude plugin install charter@elnebuloso
 ```
 
-Then, in each project that should follow the rules, run `/charter:install-rules`. It writes them to
-`.claude/rules/agent-plugin-charter/`, apart from the project's own rules, and Claude Code loads them
-like any other file under `.claude/rules/` — in every session, in subagents, after `/compact`. Read
-what it wrote and delete what you disagree with; the files are yours from then on.
+Then, in each project that should follow the rules, run `/charter:install-rules`. It writes them
+to `.claude/rules/agent-plugin-charter/`, apart from the project's own rules, and Claude Code loads
+them like any other file under `.claude/rules/` — in every session, in subagents, after `/compact`.
+Read what it wrote and delete what you disagree with; the files are yours from then on.
 
 Update — auto-update is off for this marketplace unless you switch it on under `/plugin`. A plugin
 update never touches a project's rules; run `/charter:install-rules` again to compare and pull them
