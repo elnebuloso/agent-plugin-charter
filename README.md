@@ -125,3 +125,21 @@ have to take the project over, measured against the project's own rules. Writes 
 Merges the ADRs in the directory the installed `adrs` rule names into a set that holds only the
 decisions in force today; superseded ones drop out and the old files are deleted. Works in phases
 and stops for approval before anything is deleted.
+
+### Update Backlog.md guidelines – `/charter:backlog-guidelines-update`
+
+```text
+/charter:backlog-guidelines-update
+```
+
+Replaces the Backlog.md guidelines block in every `CLAUDE.md` under a path with the block the
+installed `backlog` CLI writes today, and commits each changed file on its own as a `chore`. It
+never pushes. A file with uncommitted changes, broken markers or a detached HEAD is left alone, and
+so is a symlink. Ends with a table of what happened per file. Without a path, or whenever something
+is unclear, it asks instead of guessing.
+
+#### With arguments
+
+```text
+/charter:backlog-guidelines-update ~/projects
+```
