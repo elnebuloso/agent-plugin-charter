@@ -85,6 +85,10 @@ them.
 
 ### Install rules – `/coding:install-rules`
 
+```text
+/coding:install-rules
+```
+
 Shows which rules the project has, which are missing and which differ from the plugin's version, and
 asks which ones to install or update. A copy that differs is only overwritten after it says what
 would change and gets an explicit yes — the project's own edits would be lost. A rule the plugin no
@@ -104,11 +108,19 @@ language; settings still missing are asked for.
 
 ### Project code review – `/coding:project-code-review`
 
+```text
+/coding:project-code-review
+```
+
 Reviews the codebase as it stands, not a diff — through the eyes of a senior developer who would
 have to take the project over, measured against the project's own rules. Writes one report to
 `docs/reviews/`; changes no source file.
 
 ### Consolidate ADRs – `/coding:adrs-consolidate`
+
+```text
+/coding:adrs-consolidate
+```
 
 Merges the ADRs in the directory the installed `adrs` rule names into a set that holds only the
 decisions in force today; superseded ones drop out and the old files are deleted. Works in phases
