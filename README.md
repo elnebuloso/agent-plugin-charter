@@ -1,4 +1,4 @@
-# agent-plugin-coding
+# agent-plugin-charter
 
 Rules and skills for coding agents — pick the rules your project needs, installed as files you own.
 
@@ -24,8 +24,8 @@ the rule text into every session. We built that first and tested it. It falls sh
 - **Updates change your rules unread.** Every plugin update rewrites the rules in every project at
   once.
 
-This plugin takes the other road: `/coding:install-rules` writes the rules into your project as
-plain files under `.claude/rules/agent-plugin-coding/`. From there, Claude Code does what it does
+This plugin takes the other road: `/charter:install-rules` writes the rules into your project as
+plain files under `.claude/rules/agent-plugin-charter/`. From there, Claude Code does what it does
 with any rule file — and everything above turns around:
 
 - **Native.** Loaded at every session start, in every subagent, again after `/compact`. No hooks,
@@ -36,7 +36,7 @@ with any rule file — and everything above turns around:
   kept in the file, kept on every update.
 - **Yours to edit.** Read what was written and delete what you disagree with. A rule you don't
   actually want is worse than no rule, because the model will follow it.
-- **Updates you decide on.** Run `/coding:install-rules` again: it shows what the new version
+- **Updates you decide on.** Run `/charter:install-rules` again: it shows what the new version
   changes and overwrites only on your yes.
 - **Shared through git.** Commit the files and the whole team works under the same rules — whether
   or not they installed the plugin.
@@ -47,21 +47,21 @@ with any rule file — and everything above turns around:
 
 ```bash
 claude plugin marketplace add elnebuloso/agent-plugins
-claude plugin install coding@elnebuloso
+claude plugin install charter@elnebuloso
 ```
 
-Then, in each project that should follow the rules, run `/coding:install-rules`. It writes them to
-`.claude/rules/agent-plugin-coding/`, apart from the project's own rules, and Claude Code loads them
+Then, in each project that should follow the rules, run `/charter:install-rules`. It writes them to
+`.claude/rules/agent-plugin-charter/`, apart from the project's own rules, and Claude Code loads them
 like any other file under `.claude/rules/` — in every session, in subagents, after `/compact`. Read
 what it wrote and delete what you disagree with; the files are yours from then on.
 
 Update — auto-update is off for this marketplace unless you switch it on under `/plugin`. A plugin
-update never touches a project's rules; run `/coding:install-rules` again to compare and pull them
+update never touches a project's rules; run `/charter:install-rules` again to compare and pull them
 in:
 
 ```bash
 claude plugin marketplace update elnebuloso
-claude plugin update coding@elnebuloso
+claude plugin update charter@elnebuloso
 ```
 
 ## Rules
@@ -83,43 +83,43 @@ them.
 
 ## Skills
 
-### Install rules – `/coding:install-rules`
+### Install rules – `/charter:install-rules`
 
 ```text
-/coding:install-rules
+/charter:install-rules
 ```
 
 Shows which rules the project has, which are missing and which differ from the plugin's version, and
 asks which ones to install or update. A copy that differs is only overwritten after it says what
 would change and gets an explicit yes — the project's own edits would be lost. A rule the plugin no
 longer ships is listed too, and deleted on request; nothing outside
-`.claude/rules/agent-plugin-coding/` is touched.
+`.claude/rules/agent-plugin-charter/` is touched.
 
 #### With arguments
 
 Rules and a language can be passed directly:
 
 ```text
-/coding:install-rules base backlog make German
+/charter:install-rules base backlog make German
 ```
 
 This installs those three rules without asking which ones, with German wherever a rule asks for a
 language; settings still missing are asked for.
 
-### Project code review – `/coding:project-code-review`
+### Project code review – `/charter:project-code-review`
 
 ```text
-/coding:project-code-review
+/charter:project-code-review
 ```
 
 Reviews the codebase as it stands, not a diff — through the eyes of a senior developer who would
 have to take the project over, measured against the project's own rules. Writes one report to
 `docs/reviews/`; changes no source file.
 
-### Consolidate ADRs – `/coding:adrs-consolidate`
+### Consolidate ADRs – `/charter:adrs-consolidate`
 
 ```text
-/coding:adrs-consolidate
+/charter:adrs-consolidate
 ```
 
 Merges the ADRs in the directory the installed `adrs` rule names into a set that holds only the

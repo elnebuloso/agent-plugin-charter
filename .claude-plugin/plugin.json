@@ -1,12 +1,12 @@
 {
-  "name": "coding",
+  "name": "charter",
   "version": "0.3.0",
   "description": "Rules and skills for coding agents — pick the rules your project needs, installed as files you own.",
   "author": {
     "name": "elnebuloso",
     "url": "https://github.com/elnebuloso"
   },
-  "homepage": "https://github.com/elnebuloso/agent-plugin-coding",
-  "repository": "https://github.com/elnebuloso/agent-plugin-coding",
+  "homepage": "https://github.com/elnebuloso/agent-plugin-charter",
+  "repository": "https://github.com/elnebuloso/agent-plugin-charter",
   "license": "MIT"
 }

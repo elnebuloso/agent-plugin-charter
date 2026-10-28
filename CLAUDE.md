@@ -1,8 +1,8 @@
 # Agent Guide
 
-This repo is the `coding` plugin: rule files for coding agents plus the skills around them. Rules
-reach a project only through `/coding:install-rules`, which writes them as plain files to
-`.claude/rules/agent-plugin-coding/`. Nothing here is active while you work in this repo.
+This repo is the `charter` plugin: rule files for coding agents plus the skills around them. Rules
+reach a project only through `/charter:install-rules`, which writes them as plain files to
+`.claude/rules/agent-plugin-charter/`. Nothing here is active while you work in this repo.
 
 ## Rules are installed, never injected
 
@@ -35,13 +35,13 @@ A new rule that fails one of them belongs in the discussion, not in a file.
   is never asked for. `grep -rno '<[A-Z_]*>' rules` lists the ones in use.
 - Lowercase brackets like `<topic>` or `<adr-dir>` are filled in by the model at runtime.
 - A skill that needs a setting reads it from the installed rule, the way `adrs-consolidate` reads
-  `<ADR_DIRECTORY>` from `.claude/rules/agent-plugin-coding/adrs.md`, and asks when the rule is
+  `<ADR_DIRECTORY>` from `.claude/rules/agent-plugin-charter/adrs.md`, and asks when the rule is
   not installed. It never hardcodes the default.
 
 ## README.md
 
 - The rules table lists every file in `rules/`; each skill in `skills/` has its own section,
-  headed ``### <Name> – `/coding:<skill-name>` ``. Agents in `agents/` are building blocks of a
+  headed ``### <Name> – `/charter:<skill-name>` ``. Agents in `agents/` are building blocks of a
   skill and are described with it.
 - A skill section opens with its command in a `text` code block, so it can be copied. A skill
   that takes arguments gets a `#### With arguments` subsection with one example call, again as a
@@ -83,4 +83,4 @@ an adopting project chooses its own.
   `fix:` → patch, `feat:` → minor, `feat!:` / `BREAKING CHANGE:` → major. While pre-1.0, a
   breaking change bumps the minor. A batch of only `docs`/`chore`/`refactor`/`style` needs no bump.
 - A plugin update never changes a project's installed rules; users pull them in with
-  `/coding:install-rules`.
+  `/charter:install-rules`.

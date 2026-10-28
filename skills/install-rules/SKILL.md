@@ -1,6 +1,6 @@
 ---
 name: install-rules
-description: Installs or updates the plugin's rules in .claude/rules/agent-plugin-coding/ — asks which ones, and keeps the project's settings such as language and ADR directory across updates
+description: Installs or updates the plugin's rules in .claude/rules/agent-plugin-charter/ — asks which ones, and keeps the project's settings such as language and ADR directory across updates
 disable-model-invocation: true
 argument-hint: "[rule ...] [language]"
 ---
@@ -9,7 +9,7 @@ Install the rule files this plugin ships into the project, so Claude Code loads
 them natively at every session start — subagents included.
 
 Source: every file in `${CLAUDE_PLUGIN_ROOT}/rules/`.
-Target: `.claude/rules/agent-plugin-coding/<same name>` at the root of the project this
+Target: `.claude/rules/agent-plugin-charter/<same name>` at the root of the project this
 session runs in. Claude Code reads `.claude/rules/` recursively, so the subdirectory keeps
 these files apart from the project's own rules without changing how they load.
 
@@ -61,7 +61,7 @@ state, the settings it holds, and — read from the rule itself — what it
 presumes, such as a tool or a practice the project must already have.
 Up-to-date rules need nothing further.
 
-Then look the other way: a file in `.claude/rules/agent-plugin-coding/` with no
+Then look the other way: a file in `.claude/rules/agent-plugin-charter/` with no
 source of the same name is **no longer shipped** — the plugin renamed or dropped
 that rule, and the file keeps loading until it goes. List each one in the table
 with its heading. Only that directory is looked at; files elsewhere under

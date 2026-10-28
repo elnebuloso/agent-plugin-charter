@@ -13,7 +13,7 @@ over. The old ADRs are deleted at the end. You deliver analyses, drafts and ques
 makes the decisions.
 
 `<adr-dir>` below is the directory the project's ADR rule names —
-`.claude/rules/agent-plugin-coding/adrs.md`. Without that file, ask the user where the ADRs live.
+`.claude/rules/agent-plugin-charter/adrs.md`. Without that file, ask the user where the ADRs live.
 
 ## Ground rules for every phase
 
