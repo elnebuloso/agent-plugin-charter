@@ -71,6 +71,7 @@ claude plugin update charter@elnebuloso
 | `base.md` | Any project, any language | Working principles, design and git conventions |
 | `adrs.md` | Projects that keep architecture decision records | Read the decision record before working in an area, plus when and how to write one |
 | `backlog.md` | Users of the Backlog.md CLI | How task entries are written |
+| `chat.md` | Anyone who wants to see that the rules are loaded | A marker at the start of every final chat reply |
 | `handbook.md` | Projects with product documentation in the repo | How handbook pages are written |
 | `make.md` | Projects driven by a `Makefile` | Run the target instead of the command behind it, and what a command has to earn before it becomes one |
 | `superpowers.md` | Users of the Superpowers plugin | File naming, language and standing of specs and plans |
