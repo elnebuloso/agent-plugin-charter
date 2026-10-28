@@ -91,8 +91,15 @@ would change and gets an explicit yes — the project's own edits would be lost.
 longer ships is listed too, and deleted on request; nothing outside
 `.claude/rules/agent-plugin-coding/` is touched.
 
-Rules and a language can be passed directly — `/coding:install-rules base backlog make German`
-installs those three rules without asking which ones, with German wherever a rule asks for a
+#### With arguments
+
+Rules and a language can be passed directly:
+
+```text
+/coding:install-rules base backlog make German
+```
+
+This installs those three rules without asking which ones, with German wherever a rule asks for a
 language; settings still missing are asked for.
 
 ### Project code review – `/coding:project-code-review`
