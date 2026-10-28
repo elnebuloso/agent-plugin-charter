@@ -1,4 +1,4 @@
-# agent-plugin-charter
+# charter
 
 Rules and skills for coding agents — pick the rules your project needs, installed as files you own.
 
