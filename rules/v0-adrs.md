@@ -7,3 +7,6 @@ While the project's version is below 1.0, every ADR is a draft: the user reviews
   chat. You never set another status; the user does, in that review.
 - **A draft is rewritten, not superseded.** When a decision changes, change its ADR in place
   instead of writing a new one that supersedes it; when the decision falls away, delete the file.
+- **A draft gives the direction, not a constraint.** Follow it while it fits; where the work
+  shows it wrong, say so and rewrite the draft instead of bending the work to it — or working
+  around it unsaid.

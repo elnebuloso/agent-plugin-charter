@@ -76,7 +76,7 @@ claude plugin update charter@elnebuloso
 | `make.md` | Projects driven by a `Makefile` | Run the target instead of the command behind it, and what a command has to earn before it becomes one |
 | `releases.md` | Projects whose release tooling derives the version from commits | Which commit type cuts a release, and empty `feat` commits on request |
 | `superpowers.md` | Users of the Superpowers plugin | File naming, language and standing of specs and plans |
-| `v0-adrs.md` | Projects below 1.0 that keep architecture decision records | Every ADR stays a draft until the user reviews them all before 1.0; drafts are rewritten, not superseded |
+| `v0-adrs.md` | Projects below 1.0 that keep architecture decision records | Every ADR stays a draft until the user reviews them all before 1.0: a direction, not a constraint, rewritten rather than superseded |
 | `v0-commits.md` | Projects below 1.0 whose release tooling derives the version from commits | No breaking-change markers, so no commit cuts `1.0.0` |
 | `v0-database.md` | Projects below 1.0 with a database schema | No migrations below 1.0; the first one is created from the final schema as the last step before it |
 | `v0-design.md` | Web frontends whose visual design is not agreed yet; remove it once it is | Structure and function only: no own styling, browser defaults, third-party styling unmodified |
