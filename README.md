@@ -146,20 +146,20 @@ user then develops one line stage by stage (`03/02`, `03/03`), discards them all
 chooses a version. An `index.html` lists every version to click through from. Built versions are
 never changed, and a log keeps the state across sessions.
 
-### Project code review – `/charter:project-code-review`
+### Code audit – `/charter:code-audit`
 
 ```text
-/charter:project-code-review
+/charter:code-audit
 ```
 
-Reviews the codebase as it stands, not a diff — through the eyes of a senior developer who would
+Audits the codebase as it stands, not a diff — through the eyes of a senior developer who would
 have to take the project over, measured against the project's own rules. Writes one report to
-`docs/reviews/`; changes no source file.
+`docs/audits/`; changes no source file.
 
-### Review the handbook – `/charter:handbook-review`
+### Audit the handbook – `/charter:handbook-audit`
 
 ```text
-/charter:handbook-review
+/charter:handbook-audit
 ```
 
 Checks the existing pages in the directory the installed `handbook` rule names against that rule,
@@ -169,7 +169,7 @@ around, and what it could not decide without asking. Changes only the pages the 
 #### With arguments
 
 ```text
-/charter:handbook-review docs/handbook/billing
+/charter:handbook-audit docs/handbook/billing
 ```
 
 ### Consolidate ADRs – `/charter:adrs-consolidate`
@@ -182,22 +182,22 @@ Merges the ADRs in the directory the installed `adrs` rule names into a set that
 decisions in force today; superseded ones drop out and the old files are deleted. Works in phases
 and stops for approval before anything is deleted.
 
-### Backlog tasks from a review – `/charter:backlog-from-review`
+### Backlog tasks from a code audit – `/charter:backlog-from-code-audit`
 
 ```text
-/charter:backlog-from-review
+/charter:backlog-from-code-audit
 ```
 
-Turns the findings of a review document — such as one from `/charter:project-code-review` — into
+Turns the findings of an audit document — such as one from `/charter:code-audit` — into
 Backlog.md tasks: one per finding, related ones bundled, questions as tasks of their own, existing
 tasks extended instead of duplicated, findings the code no longer has left out. Every task stands on
-its own and never mentions the review. Shows a preview and writes nothing before it is approved;
-touches neither the review nor the code.
+its own and never mentions the audit. Shows a preview and writes nothing before it is approved;
+touches neither the audit nor the code.
 
 #### With arguments
 
 ```text
-/charter:backlog-from-review docs/reviews/2026-10-30-1658-full.md m-0
+/charter:backlog-from-code-audit docs/audits/2026-10-30-1658-full.md m-0
 ```
 
 ### Update Backlog.md guidelines – `/charter:backlog-guidelines-update`

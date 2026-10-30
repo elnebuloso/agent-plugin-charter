@@ -1,11 +1,11 @@
 ---
-name: handbook-review
-description: Reviews the existing handbook pages against the project's handbook rule — lists what breaks it per page and fixes only what the user approves
+name: handbook-audit
+description: Audits the existing handbook pages against the project's handbook rule — lists what breaks it per page and fixes only what the user approves
 argument-hint: "[page or directory]"
 disable-model-invocation: true
 ---
 
-# Review the handbook
+# Audit the handbook
 
 The handbook rule shapes pages as they are written; pages written before it, or past it, are never
 checked. This skill checks them. You deliver findings — the user decides what gets fixed.
@@ -18,7 +18,7 @@ lives. Judge only by what the rule says; add no criteria of your own.
 Scope: $ARGUMENTS — a page or a directory inside the handbook. Without one, every page in
 `<handbook-dir>/`.
 
-## Review
+## Audit
 
 Read every page in scope in full before judging any of them: a page that looks like it repeats
 another, or holds content for another role, only shows up next to the others. A gap is a finding
