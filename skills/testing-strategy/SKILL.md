@@ -35,14 +35,15 @@ Read before running anything:
   on purpose.
 - CI: which suites it runs. The strategy changes local habits only.
 
-Then tell the user what step 2 will start — every full suite and what each brings up — and ask with
-`AskUserQuestion`: measure everything (recommended), or leave out the suites they name. A suite left
-out appears in the file as not measured.
+Then tell the user what steps 2 and 3 will start — every full suite, every integration and
+end-to-end file on its own, and what each brings up — and ask with `AskUserQuestion`: run
+everything (recommended), or leave out the suites they name. A suite left out is neither measured
+nor checked for isolation, and appears in the file as not measured.
 
 ## 2. Measure
 
-Time each run once with the toolchain versions the project pins, output to a file, and record wall
-time and exit code:
+Time each run once with the toolchain versions the project pins, output to a file outside the
+project, and record wall time and exit code:
 
 - every full suite as the task runner starts it, with static checks separately where one target
   bundles them;
@@ -52,7 +53,7 @@ time and exit code:
 - the runner's change-based selection, if it has one: after one probe edit to a leaf module and one
   to a widely imported module, each reverted afterwards;
 - the build step on its own, where a suite builds first;
-- the formatter's fix run next to the lint check.
+- the formatter's fix run next to the lint check, where the project has both.
 
 Check what a change-based run really selected, from the runner's output, not only that it passed.
 
@@ -92,7 +93,7 @@ Derive the list from this project's layout, not from a template. Typical rows:
 - **A unit with its own tests:** those tests, or the change-based run.
 - **Where parts meet — a query, a client for another service, a message handler:** the integration
   tests of that boundary.
-- **An entry point — a route, handler, command or page:** its tests, then one real call against a
+- **An entry point — a route, a command or a page:** its tests, then one real call against a
   running instance; an end-to-end file only when the change alters a flow that file walks through.
 - **A user-visible text:** search the old text in the test files; only files that assert it run.
 - **Only how something looks:** no test catches a look; look at it running.
