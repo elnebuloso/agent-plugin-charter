@@ -79,13 +79,13 @@ claude plugin update charter@elnebuloso
 | `v0-adrs.md` | Projects below 1.0 that keep architecture decision records | Every ADR stays a draft until the user reviews them all before 1.0: a direction, not a constraint, rewritten rather than superseded |
 | `v0-commits.md` | Projects below 1.0 whose release tooling derives the version from commits | No breaking-change markers, so no commit cuts `1.0.0` |
 | `v0-database.md` | Projects below 1.0 with a database schema | No migrations below 1.0; the first one is created from the final schema as the last step before it |
-| `v0-design.md` | Web frontends whose visual design is not agreed yet | Structure and function only: no own styling, browser defaults, third-party styling unmodified |
+| `v0-design.md` | Web frontends whose visual design is not agreed yet | Structure and function only: no own styling, browser defaults, third-party styling unmodified — mockups exempt |
 
 Some rules carry settings the project chooses at the first install: the rules that govern prose —
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
 answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where
-its pages live (default `docs/handbook`). The answers stay in the installed files, and updates keep
-them.
+its pages live (default `docs/handbook`), `v0-design` where the mockups live (default
+`docs/mockups`). The answers stay in the installed files, and updates keep them.
 
 The `v0-` rules hold for one phase of a project and are deleted from it when that phase ends: at
 1.0, or for `v0-design` once the visual design is agreed.

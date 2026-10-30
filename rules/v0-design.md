@@ -14,3 +14,4 @@ not agreed yet, and anything styled before it is thrown away.
   project included.
 - **Design skills stay off.** Load no design, styling or animation skill for frontend work, even
   when its description matches — unless the user asks for one by name.
+- **Mockups in `<MOCKUP_DIRECTORY>/` are exempt from all of this.** They exist to find the design.

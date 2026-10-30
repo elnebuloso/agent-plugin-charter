@@ -40,6 +40,8 @@ A rule may carry settings the project chooses, written as `<UPPERCASE_NAME>`:
   alternative `docs/adr`.
 - `<HANDBOOK_DIRECTORY>` — where the handbook pages live. Default `docs/handbook`,
   common alternative `docs/guide`.
+- `<MOCKUP_DIRECTORY>` — where design mockups live. Default `docs/mockups`,
+  common alternative `design/mockups`.
 
 A setting is chosen once. The project's existing copy of a rule holds the values
 it was installed with — read them from the place the placeholder sits in the
