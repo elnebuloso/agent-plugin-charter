@@ -200,6 +200,19 @@ touches neither the audit nor the code.
 /charter:backlog-from-code-audit docs/audits/2026-10-30-1658-full.md m-0
 ```
 
+### Testing strategy – `/charter:testing-strategy`
+
+```text
+/charter:testing-strategy
+```
+
+Stops the agent from running every suite for every small change. It measures each suite as the
+task runner starts it, one file of each kind and the runner's change-based selection, finds the
+slowest file, and runs every e2e file on its own to catch tests that pass only after another file
+set up their state. Narrow runs become variables on the existing targets (`make test TEST=…`). The
+result is `.claude/rules/testing-strategy.md`: the measured cost of each run, the cheapest check per
+kind of change, and the full suites before the commit that ships. CI stays as it is.
+
 ### Update Backlog.md guidelines – `/charter:backlog-guidelines-update`
 
 ```text
