@@ -79,13 +79,16 @@ claude plugin update charter@elnebuloso
 | `v0-adrs.md` | Projects below 1.0 that keep architecture decision records | Every ADR stays a draft until the user reviews them all before 1.0: a direction, not a constraint, rewritten rather than superseded |
 | `v0-commits.md` | Projects below 1.0 whose release tooling derives the version from commits | No breaking-change markers, so no commit cuts `1.0.0` |
 | `v0-database.md` | Projects below 1.0 with a database schema | No migrations below 1.0; the first one is created from the final schema as the last step before it |
-| `v0-design.md` | Web frontends whose visual design is not agreed yet; remove it once it is | Structure and function only: no own styling, browser defaults, third-party styling unmodified |
+| `v0-design.md` | Web frontends whose visual design is not agreed yet | Structure and function only: no own styling, browser defaults, third-party styling unmodified |
 
 Some rules carry settings the project chooses at the first install: the rules that govern prose —
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
 answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where
 its pages live (default `docs/handbook`). The answers stay in the installed files, and updates keep
 them.
+
+The `v0-` rules hold for one phase of a project and are deleted from it when that phase ends: at
+1.0, or for `v0-design` once the visual design is agreed.
 
 ## Skills
 
@@ -99,9 +102,8 @@ Shows which rules the project has, which are missing and which differ from the p
 asks which ones to install or update. Where rules are installed already, it first offers to update
 only those — no picking again; rules not installed yet are named, not offered. A copy that differs
 is only overwritten after it says what would change and gets an explicit yes, once for all or per
-rule — the project's own edits would be lost. A rule the plugin no
-longer ships is listed too, and deleted on request; nothing outside
-`.claude/rules/agent-plugin-charter/` is touched.
+rule — the project's own edits would be lost. A rule the plugin no longer ships is listed too,
+and deleted on request; nothing outside `.claude/rules/agent-plugin-charter/` is touched.
 
 #### With arguments
 
