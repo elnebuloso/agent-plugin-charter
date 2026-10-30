@@ -76,6 +76,7 @@ claude plugin update charter@elnebuloso
 | `make.md` | Projects driven by a `Makefile` | Run the target instead of the command behind it, and what a command has to earn before it becomes one |
 | `superpowers.md` | Users of the Superpowers plugin | File naming, language and standing of specs and plans |
 | `v0-database.md` | Projects below 1.0 with a database schema | No migrations below 1.0; the first one is created from the final schema as the last step before it |
+| `v0-design.md` | Web frontends whose visual design is not agreed yet; remove it once it is | Structure and function only: no own styling, browser defaults, third-party styling unmodified |
 
 Some rules carry settings the project chooses at the first install: the rules that govern prose —
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
