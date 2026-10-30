@@ -69,11 +69,19 @@ with its heading. Only that directory is looked at; files elsewhere under
 
 ## Ask
 
-Ask with `AskUserQuestion`, multi-select, which of the rules that are not up to
-date to install or update. No question carries more than four options, so split
-the rules across questions where needed. A rule whose precondition is plainly
-missing here is still offered, but say so. Skip this question when rules were
-passed as arguments.
+When rules were passed as arguments, they are the chosen ones; skip to the
+settings below.
+
+When at least one installed rule **differs**, first ask with `AskUserQuestion`:
+update only the installed rules (recommended), or choose rules. Updating chooses
+every rule in state **differs** and nothing else; the rules not installed are
+then named in one line, with the command that installs them, not offered.
+
+Otherwise — or when the user chose to pick — ask with `AskUserQuestion`,
+multi-select, which of the rules that are not up to date to install or update.
+No question carries more than four options, so split the rules across questions
+where needed. A rule whose precondition is plainly missing here is still
+offered, but say so.
 
 Then ask for each setting the chosen rules still lack — the language counts as
 given when passed as an argument — every one of them with
@@ -86,7 +94,9 @@ in for them — if the question fails, fix it and ask again.
 
 For each chosen rule in state **differs**, say in a few lines what the plugin's
 version would change — added, removed and reworded rules, not a full diff — and
-that overwriting drops the project's own edits. Write it only on an explicit yes.
+that overwriting drops the project's own edits. Then ask once with
+`AskUserQuestion`: overwrite all of them, or decide per rule. Write a rule only
+on an explicit yes — the one for all, or its own.
 
 For files **no longer shipped**, ask with `AskUserQuestion`, multi-select, which
 to delete. Say what each one covers and, where a renamed rule replaces it, which

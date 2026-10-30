@@ -93,8 +93,10 @@ them.
 ```
 
 Shows which rules the project has, which are missing and which differ from the plugin's version, and
-asks which ones to install or update. A copy that differs is only overwritten after it says what
-would change and gets an explicit yes — the project's own edits would be lost. A rule the plugin no
+asks which ones to install or update. Where rules are installed already, it first offers to update
+only those — no picking again; rules not installed yet are named, not offered. A copy that differs
+is only overwritten after it says what would change and gets an explicit yes, once for all or per
+rule — the project's own edits would be lost. A rule the plugin no
 longer ships is listed too, and deleted on request; nothing outside
 `.claude/rules/agent-plugin-charter/` is touched.
 
