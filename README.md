@@ -117,6 +117,22 @@ Reviews the codebase as it stands, not a diff — through the eyes of a senior d
 have to take the project over, measured against the project's own rules. Writes one report to
 `docs/reviews/`; changes no source file.
 
+### Review the handbook – `/charter:handbook-review`
+
+```text
+/charter:handbook-review
+```
+
+Checks the existing pages in the directory the installed `handbook` rule names against that rule,
+and nothing else. Reports the findings per page, the flaws in the product the pages had to write
+around, and what it could not decide without asking. Changes only the pages the user picks.
+
+#### With arguments
+
+```text
+/charter:handbook-review docs/handbook/billing
+```
+
 ### Consolidate ADRs – `/charter:adrs-consolidate`
 
 ```text
