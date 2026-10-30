@@ -74,6 +74,7 @@ claude plugin update charter@elnebuloso
 | `chat.md` | Anyone who wants to see that the rules are loaded | A marker at the start of every final chat reply |
 | `handbook.md` | Projects with product documentation in the repo | How handbook pages are written: what earns a sentence, what never goes in, examples and screenshots |
 | `make.md` | Projects driven by a `Makefile` | Run the target instead of the command behind it, and what a command has to earn before it becomes one |
+| `releases.md` | Projects whose release tooling derives the version from commits | Which commit type cuts a release, and empty `feat` commits on request |
 | `superpowers.md` | Users of the Superpowers plugin | File naming, language and standing of specs and plans |
 | `v0-adrs.md` | Projects below 1.0 that keep architecture decision records | Every ADR stays a draft until the user reviews them all before 1.0; drafts are rewritten, not superseded |
 | `v0-commits.md` | Projects below 1.0 whose release tooling derives the version from commits | No breaking-change markers, so no commit cuts `1.0.0` |
