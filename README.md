@@ -116,6 +116,19 @@ Rules and a language can be passed directly:
 This installs those three rules without asking which ones, with German wherever a rule asks for a
 language; settings still missing are asked for.
 
+### Mockups – `/charter:mockups`
+
+```text
+/charter:mockups
+```
+
+Evolves the visual design through click dummies in plain HTML and CSS, each with a light/dark
+switch. Per round it asks which screens to cover and offers nine style directions, three of which
+become lines in the directory the installed `v0-design` rule names: `01/01`, `02/01`, `03/01`. The
+user then develops one line stage by stage (`03/02`, `03/03`), discards them all for new lines, or
+chooses a version. An `index.html` lists every version to click through from. Built versions are
+never changed, and a log keeps the state across sessions.
+
 ### Project code review – `/charter:project-code-review`
 
 ```text
