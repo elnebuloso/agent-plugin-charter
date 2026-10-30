@@ -165,6 +165,24 @@ Merges the ADRs in the directory the installed `adrs` rule names into a set that
 decisions in force today; superseded ones drop out and the old files are deleted. Works in phases
 and stops for approval before anything is deleted.
 
+### Backlog tasks from a review – `/charter:backlog-from-review`
+
+```text
+/charter:backlog-from-review
+```
+
+Turns the findings of a review document — such as one from `/charter:project-code-review` — into
+Backlog.md tasks: one per finding, related ones bundled, questions as tasks of their own, existing
+tasks extended instead of duplicated, findings the code no longer has left out. Every task stands on
+its own and never mentions the review. Shows a preview and writes nothing before it is approved;
+touches neither the review nor the code.
+
+#### With arguments
+
+```text
+/charter:backlog-from-review docs/reviews/2026-10-30-1658-full.md m-0
+```
+
 ### Update Backlog.md guidelines – `/charter:backlog-guidelines-update`
 
 ```text
