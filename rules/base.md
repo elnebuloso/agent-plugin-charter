@@ -18,8 +18,7 @@
   mock only what you can't run (network, clock, payment provider).
 - **Test at the lowest level that can catch the failure.** Logic and edge cases go in unit tests;
   an integration test covers where parts meet (database, HTTP, queue, file system); an end-to-end
-  test covers a flow through the system, not its edge cases. No higher-level test for what a lower
-  one already covers.
+  test covers a flow through the system. No higher-level test for what a lower one already covers.
 - **Bugfixes need a regression test.** When you fix a bug, first write a test that
   reproduces it (fails before, passes after) so it can't silently come back. Not sensibly
   testable? Say why — no empty test as a placeholder.
