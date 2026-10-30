@@ -208,12 +208,12 @@ touches neither the audit nor the code.
 
 Stops the agent from running every suite for every small change. Works with any language, test
 runner and task runner. It measures each suite as the task runner starts it, one file of each kind
-and the runner's change-based selection, finds the slowest file, and runs every integration and
-end-to-end file on its own to catch tests that pass only after another file set up their state.
-Test fixes and narrow runs in the task runner are proposed and applied only as approved. The result
-is `.claude/rules/testing-strategy.md`: the measured cost of each run, the cheapest check per kind
-of change, and the full suites before the commit that ships. CI stays as it is; nothing is
-committed.
+and the runner's change-based selection, each run under a time limit, and finds the slowest file.
+For the suites the user picks once their cost is known, it runs every integration and end-to-end
+file on its own to catch tests that pass only after another file set up their state. Test fixes and
+narrow runs in the task runner are proposed and applied only as approved. The result is
+`.claude/rules/testing-strategy.md`: the measured cost of each run, the cheapest check per kind of
+change, and the full suites before the commit that ships. CI stays as it is; nothing is committed.
 
 ### Update Backlog.md guidelines – `/charter:backlog-guidelines-update`
 

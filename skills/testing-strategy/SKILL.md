@@ -35,15 +35,17 @@ Read before running anything:
   on purpose.
 - CI: which suites it runs. The strategy changes local habits only.
 
-Then tell the user what steps 2 and 3 will start — every full suite, every integration and
-end-to-end file on its own, and what each brings up — and ask with `AskUserQuestion`: run
-everything (recommended), or leave out the suites they name. A suite left out is neither measured
-nor checked for isolation, and appears in the file as not measured.
+Then tell the user what step 2 will start — every full suite and what each brings up — and ask
+with `AskUserQuestion`: run everything (recommended), or leave out the suites they name. A suite
+left out appears in the file as not measured. Ask in the same go for the time limit per run:
+15 minutes (recommended), or one the user names.
 
 ## 2. Measure
 
 Time each run once with the toolchain versions the project pins, output to a file outside the
-project, and record wall time and exit code:
+project, and record wall time and exit code. A run that exceeds the time limit is stopped and
+recorded as timed out, and the next one starts; a timed-out run is reported, never retried
+unasked.
 
 - every full suite as the task runner starts it, with static checks separately where one target
   bundles them;
@@ -63,10 +65,15 @@ is in its area.
 
 ## 3. Check isolation
 
-Run every integration and end-to-end file alone. A file that passes in the full run and fails alone
-depends on state another file left behind (an account, a seeded row, a setting) and passes only by
-order or timing. That is a bug in the test. A file that is serial on purpose (each test builds on
-the one before) is noted as "run whole", never split by test name.
+Running every integration and end-to-end file alone can take far longer than the suite. Show the
+user, per suite, its measured time and its number of files, and ask with `AskUserQuestion`,
+multi-select, which suites to check; a suite not checked appears in the file as not checked. Never
+sample files within a suite — the file that depends on another is the one a sample misses.
+
+Run every file of the chosen suites alone, under the same time limit. A file that passes in the
+full run and fails alone depends on state another file left behind (an account, a seeded row, a
+setting) and passes only by order or timing. That is a bug in the test. A file that is serial on
+purpose (each test builds on the one before) is noted as "run whole", never split by test name.
 
 ## 4. Propose, then change
 
@@ -140,4 +147,5 @@ section the project has no case for.
 
 Run lint and the suites the changes touched, in full. Commit nothing; committing is the user's
 call. Report to the user: the measured table, the slowest file, what the narrow runs save on a
-typical change, the isolation bugs found and which of them were fixed, and that CI is unchanged.
+typical change, the runs that timed out, the isolation bugs found and which of them were fixed,
+and that CI is unchanged.
