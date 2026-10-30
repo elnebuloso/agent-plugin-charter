@@ -84,8 +84,16 @@ then named in one line, with the command that installs them, not offered.
 Otherwise — or when the user chose to pick — ask with `AskUserQuestion`,
 multi-select, which of the rules that are not up to date to install or update.
 No question carries more than four options, so split the rules across questions
-where needed. A rule whose precondition is plainly missing here is still
-offered, but say so.
+where needed.
+
+A rule that cannot apply here is not offered, only named in one line with the
+reason, and still installed when passed as an argument. That is the case when
+the tool it is written for is missing from this system — a plugin whose skills
+are not available, a command not on the `PATH` — or when it is written for a
+phase the project has left, such as a version below 1.0 for a project at 1.0 or
+later. Nothing else counts: a practice the project has not taken up yet, such as
+ADRs, or a file not written yet, such as a `Makefile`, is what installing the
+rule may be for.
 
 Then ask for each setting the chosen rules still lack — the language counts as
 given when passed as an argument — every one of them with
