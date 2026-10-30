@@ -11,94 +11,98 @@ full suites run before the commit that ships and always in CI. The output is one
 `.claude/rules/testing-strategy.md`, plus small changes to the task runner where needed.
 
 Every number in the file is measured in this project, on this machine. Every command in the file has
-been run once and worked. Nothing is dropped from CI.
+been run once and worked. Nothing is dropped from CI. Nothing here assumes a language, a test runner
+or a task runner: what this project uses is found in step 1, and what its runner can do is looked
+up in the runner's own help or documentation.
+
+## 0. Before you start
+
+- **The work tree is clean.** Step 2 makes probe edits and reverts them with
+  `git checkout -- <file>`. With uncommitted changes, stop and ask the user to commit or set them
+  aside first; never stash or reset their work yourself.
+- **An existing `.claude/rules/testing-strategy.md` is updated, not replaced.** Read it first.
+  Measurements and the mapping of change kinds are rewritten; lines the user added stay as they are.
 
 ## 1. Inventory
 
 Read before running anything:
 
-- The task runner (`Makefile`, `package.json` scripts, `justfile`, `Taskfile`, `tox.ini`, …) and the
-  project rules about it. If the project says "use the target, not the command behind it", the
-  narrow runs must go through the targets too (step 4).
-- Each suite's config: test runner, projects or workspaces, what it starts (a build, a server, a
-  database, containers), whether files run in parallel, whether a file is serial on purpose.
+- The task runner the project starts its commands with, and the project rules about it. If the
+  project says to use its targets rather than the commands behind them, the narrow runs go through
+  the targets too (step 4).
+- Each suite's configuration: the test runner, its projects or packages, what a run starts (a
+  build, a server, a database, containers), whether files run in parallel, whether a file is serial
+  on purpose.
 - CI: which suites it runs. The strategy changes local habits only.
+
+Then tell the user what step 2 will start — every full suite and what each brings up — and ask with
+`AskUserQuestion`: measure everything (recommended), or leave out the suites they name. A suite left
+out appears in the file as not measured.
 
 ## 2. Measure
 
-Time each run once with the project's toolchain active (right Node/Python/Go version), output to a
-file, and record wall time and exit code:
+Time each run once with the toolchain versions the project pins, output to a file, and record wall
+time and exit code:
 
-- every full suite as the task runner starts it (lint, unit, component, e2e, type check separately
-  if the lint target bundles them);
-- per suite project or package, if the runner has them;
-- one single test file of each kind (unit spec, component story, e2e file);
-- the runner's own change-based selection, after a probe edit: one edit to a leaf component and one
-  to a widely imported module, each reverted afterwards (stash the work tree first);
-- the build step on its own when e2e builds first;
-- formatting fixes (`format` target) next to the lint check.
+- every full suite as the task runner starts it, with static checks separately where one target
+  bundles them;
+- per project or package, where the runner has them;
+- one single test file of each kind the project has (unit, integration, end-to-end);
+- one single test by name;
+- the runner's change-based selection, if it has one: after one probe edit to a leaf module and one
+  to a widely imported module, each reverted afterwards;
+- the build step on its own, where a suite builds first;
+- the formatter's fix run next to the lint check.
 
-Find the slow files with the runner's JSON or timing reporter. One file that dominates a suite is the
-most useful line in the result: the agent then knows to leave it out unless the change is in its
-area.
+Check what a change-based run really selected, from the runner's output, not only that it passed.
 
-Change-based selection by runner, to try first:
-
-| Runner | Change-based run | Single file / test |
-|---|---|---|
-| Vitest | `vitest run --changed` (uncommitted), `--changed <ref>` | `vitest run <path>`, `-t <name>`, `--project <name>` |
-| Jest | `jest --onlyChanged`, `--changedSince <ref>` | `jest <path>`, `-t <name>` |
-| Playwright | none built in | `playwright test <file>`, `--grep <title>` |
-| pytest | `--lf` (last failed); `pytest-testmon` if installed | `pytest <path>::<test>`, `-k <expr>` |
-| Go | none; packages are the unit | `go test ./<pkg>/...`, `-run <regex>` |
-| Cargo | none | `cargo test -p <crate> <filter>` |
-
-Check what a change-based run really selected (reporter output), not only that it passed.
+Find the slow files with the runner's timing or machine-readable report. One file that dominates a
+suite is the most useful line in the result: the agent then knows to leave it out unless the change
+is in its area.
 
 ## 3. Check isolation
 
-Run every e2e or integration file alone. A file that passes in the full run and fails alone depends
-on state another file left behind (an account, a seeded row, a setting) and passes only by worker
-order or timing. That is a bug in the test: fix it so the file sets up or avoids that state, in a
-`test:` commit of its own, and mention it to the user. A file that is serial on purpose (each test
-builds on the one before) is noted as "run whole", never split with `--grep`.
+Run every integration and end-to-end file alone. A file that passes in the full run and fails alone
+depends on state another file left behind (an account, a seeded row, a setting) and passes only by
+order or timing. That is a bug in the test. A file that is serial on purpose (each test builds on
+the one before) is noted as "run whole", never split by test name.
 
-## 4. Expose the narrow runs
+## 4. Propose, then change
 
-Prefer a variable on the existing targets over new targets:
+Collect what the project itself would change:
 
-```make
-test: ## Run the unit tests once (TEST=… narrows the run)
-	npm test -- $(TEST)
+- **Test fixes** for each isolation bug from step 3: the file sets up or avoids that state itself.
+- **Narrow runs in the task runner**, where its targets cannot be narrowed yet. Prefer a parameter
+  on an existing target (a file, a name filter) over a new target; add one only for a narrow run
+  that needs more than arguments. Follow the project's rules for its task runner.
 
-e2e: ## Run the browser tests (E2E=… narrows the run)
-	npm run test:e2e -- $(E2E)
-```
-
-Add a new target only for a narrow run that needs more than arguments (a script, a different
-setup), and follow the project's rules for targets (help text, `.PHONY`). Run each narrowed form
-once to prove it.
+Show the list, then ask with `AskUserQuestion`, multi-select, which to apply. Apply only those, run
+each changed test and each narrowed target once to prove it, and say what stays open. A narrow run
+not applied is left out of the file, not written with the raw command behind it.
 
 ## 5. Map change kinds to checks
+
+Each kind of change gets the lowest test level that can catch what it breaks — unit, then
+integration, then end-to-end. A higher level runs only for what the lower ones cannot see: where
+parts meet, or a flow through the system.
 
 Derive the list from this project's layout, not from a template. Typical rows:
 
 - **Default after a code edit:** the change-based run, if the runner has one.
-- **A component:** its stories or component tests; look at it in a running dev environment.
-- **A module with specs:** its spec file, or the change-based run.
-- **A route, handler, page or form:** its spec, then a request against a running dev server (curl or
-  browser); the e2e file only when the change alters a flow that file walks through.
-- **A user-visible text:** grep the old text in the test files; only files that assert it run.
-- **Styles only:** no test catches a look; check the screen (both colour schemes if the project has
-  them) and the component's stories.
-- **Everything that reaches every request or the build:** server hooks or middleware, the HTML shell
-  or root layout, bundler or framework config, a dependency, a migration, environment parsing — the
-  full suites.
-- **Types:** if the type checker only runs whole-project, it runs at the end.
+- **A unit with its own tests:** those tests, or the change-based run.
+- **Where parts meet — a query, a client for another service, a message handler:** the integration
+  tests of that boundary.
+- **An entry point — a route, handler, command or page:** its tests, then one real call against a
+  running instance; an end-to-end file only when the change alters a flow that file walks through.
+- **A user-visible text:** search the old text in the test files; only files that assert it run.
+- **Only how something looks:** no test catches a look; look at it running.
+- **Everything that every request or the build passes through:** shared middleware, build or
+  framework configuration, a dependency, a schema migration, environment parsing — the full suites.
+- **Static checks that only run whole-project:** at the end.
 
 ## 6. Write `.claude/rules/testing-strategy.md`
 
-Rules for the agent, short, in the style of the project's other rule files:
+Rules for the agent, short, in the style and language of the project's other rule files:
 
 ```markdown
 # Testing strategy
@@ -119,23 +123,20 @@ Measured in the agent's shell (<cores>):
 
 - … the rows from step 5, each naming the exact command …
 
-## E2E files
+## Files that run whole
 
-- … which files run alone, which are serial and run whole …
-- A new e2e file must not depend on the state another file leaves behind.
+- … the serial files from step 3 …
 
 ## Before the commit that ships
 
 All full suites after the last change. A narrow run that passed earlier does not stand in for them.
 ```
 
-Name commands exactly as they run in this project, through its task runner. Leave out a row the
-project has no case for.
+Name commands exactly as they run in this project, through its task runner. Leave out a row or a
+section the project has no case for.
 
 ## 7. Finish
 
-- Run lint and the suites the changes touched (task runner, test files), in full.
-- Commit the test fix, if any, separately from the strategy and the task runner change; follow the
-  project's commit conventions.
-- Report to the user: the measured table, the slowest file, what the narrow runs save on a typical
-  change, any isolation bug found, and that CI is unchanged.
+Run lint and the suites the changes touched, in full. Commit nothing; committing is the user's
+call. Report to the user: the measured table, the slowest file, what the narrow runs save on a
+typical change, the isolation bugs found and which of them were fixed, and that CI is unchanged.

@@ -206,12 +206,14 @@ touches neither the audit nor the code.
 /charter:testing-strategy
 ```
 
-Stops the agent from running every suite for every small change. It measures each suite as the
-task runner starts it, one file of each kind and the runner's change-based selection, finds the
-slowest file, and runs every e2e file on its own to catch tests that pass only after another file
-set up their state. Narrow runs become variables on the existing targets (`make test TEST=…`). The
-result is `.claude/rules/testing-strategy.md`: the measured cost of each run, the cheapest check per
-kind of change, and the full suites before the commit that ships. CI stays as it is.
+Stops the agent from running every suite for every small change. Works with any language, test
+runner and task runner. It measures each suite as the task runner starts it, one file of each kind
+and the runner's change-based selection, finds the slowest file, and runs every integration and
+end-to-end file on its own to catch tests that pass only after another file set up their state.
+Test fixes and narrow runs in the task runner are proposed and applied only as approved. The result
+is `.claude/rules/testing-strategy.md`: the measured cost of each run, the cheapest check per kind
+of change, and the full suites before the commit that ships. CI stays as it is; nothing is
+committed.
 
 ### Update Backlog.md guidelines – `/charter:backlog-guidelines-update`
 
