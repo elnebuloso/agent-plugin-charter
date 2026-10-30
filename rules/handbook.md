@@ -17,7 +17,8 @@ how it was built.
   interface are spelled exactly as the product shows them, casing included, even where the
   sentence's grammar would want another form.
 - **A sentence stays only if the reader does or decides something differently for knowing it.**
-  Delete the rest, and a heading left with nothing under it goes too.
+  How the product's parts fit together, as the reader meets them, passes that test — a page may
+  explain it before any step. Delete the rest, and a heading left with nothing under it goes too.
 - **Write what the reader cannot see.** The product is in front of them: no description of the
   screen, no step for a click the screen already makes obvious. Numbered steps are for a task
   whose order matters or that spans several places. A page earns its text with what the interface
