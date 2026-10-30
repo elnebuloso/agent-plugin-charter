@@ -42,6 +42,8 @@ A rule may carry settings the project chooses, written as `<UPPERCASE_NAME>`:
   common alternative `docs/guide`.
 - `<MOCKUP_DIRECTORY>` — where design mockups live. Default `docs/mockups`,
   common alternative `design/mockups`.
+- `<PRIVATE_DIRECTORY>` — the user's private notes, kept from the agent. Default
+  `docs/private`, common alternative `docs/notes`.
 
 A setting is chosen once. The project's existing copy of a rule holds the values
 it was installed with — read them from the place the placeholder sits in the

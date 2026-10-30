@@ -74,6 +74,7 @@ claude plugin update charter@elnebuloso
 | `chat.md` | Anyone who wants to see that the rules are loaded | A marker at the start of every final chat reply |
 | `handbook.md` | Projects with product documentation in the repo | How handbook pages are written: what earns a sentence, what never goes in, examples and screenshots |
 | `make.md` | Projects driven by a `Makefile` | Run the target instead of the command behind it, and what a command has to earn before it becomes one |
+| `private-notes.md` | Anyone who keeps notes in the repo the agent must not touch | A directory the agent never reads, searches or edits, unless the user names a file |
 | `releases.md` | Projects whose release tooling derives the version from commits | Which commit type cuts a release, and empty `feat` commits on request |
 | `superpowers.md` | Users of the Superpowers plugin | File naming, language and standing of specs and plans |
 | `v0-adrs.md` | Projects below 1.0 that keep architecture decision records | Every ADR stays a draft until the user reviews them all before 1.0: a direction, not a constraint, rewritten rather than superseded |
@@ -85,7 +86,21 @@ Some rules carry settings the project chooses at the first install: the rules th
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
 answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where
 its pages live (default `docs/handbook`), `v0-design` where the mockups live (default
-`docs/mockups`). The answers stay in the installed files, and updates keep them.
+`docs/mockups`), `private-notes` where the private notes live (default `docs/private`). The answers
+stay in the installed files, and updates keep them.
+
+`private-notes` is a limit the model keeps, not a lock. A search can still reach the directory by
+accident; keeping it in `.gitignore` hides it from searches that honour that file, ripgrep among
+them, and a deny rule in the project's `.claude/settings.json` blocks Claude Code's file tools
+outright — adjust the path to the one you chose:
+
+```json
+{
+  "permissions": {
+    "deny": ["Read(./docs/private/**)", "Edit(./docs/private/**)"]
+  }
+}
+```
 
 The `v0-` rules hold for one phase of a project and are deleted from it when that phase ends: at
 1.0, or for `v0-design` once the visual design is agreed.
