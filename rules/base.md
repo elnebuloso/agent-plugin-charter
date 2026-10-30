@@ -51,6 +51,7 @@
 
 ## Git
 
+- **Never push on your own.** Commit locally; the user pushes, or asks you to in so many words.
 - **Conventional Commits, one coherent change per commit.** Don't bundle unrelated work.
   Example: `fix(auth): handle expired tokens on refresh`
 - **Always `git pull --rebase` before pushing.** Rebase, not merge.
