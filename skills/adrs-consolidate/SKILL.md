@@ -41,6 +41,9 @@ with:
    exactly the rows of the table.
 4. A description of the ADR format used so far — structure, file names, numbering — so the new
    ADRs match it. Where it departs from `adrs.md`, name the gap; the new ADRs follow the rule.
+5. Per ADR, every name and link `adrs.md` forbids an ADR to hold — paths, identifiers, links
+   into the code, documentation or task tracker — so the drafts in phase 3 describe the thing
+   instead.
 
 ## Phase 2: New structure
 
