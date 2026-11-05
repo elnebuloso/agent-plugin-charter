@@ -1,6 +1,6 @@
 ---
 name: mockups
-description: Evolves the project's visual design through click dummies — offers style directions, builds plain HTML/CSS mockups in numbered lines and stages, and develops the line the user picks until a design is chosen
+description: Evolves the project's visual design through click dummies — lets the user set how far the layout may change, offers sketched design directions or picks them itself, builds plain HTML/CSS mockups in numbered lines and stages, and develops the line the user picks until a design is chosen
 disable-model-invocation: true
 ---
 
@@ -30,9 +30,9 @@ to `.gitignore`.
   visibly inert. Content is realistic, from the product's domain, never placeholder text.
 - **Touch nothing outside `<mockup-dir>/`** and `.gitignore` — the project's frontend least of all.
 - **The log keeps the state.** `<mockup-dir>/README.md` names the design skill in use and holds
-  one row per version: line, stage, the version it was developed from, direction, scope, what
-  changed, the user's verdict — discarded, developed, chosen. Answers given in chat do not survive
-  the session, so record each one as it comes.
+  one row per version: line, stage, the version it was developed from, freedom, direction, scope,
+  who chose them — the user or you, what changed, the user's verdict — discarded, developed,
+  chosen. Answers given in chat do not survive the session, so record each one as it comes.
 - **One page to navigate from.** `<mockup-dir>/index.html` lists every version, grouped by line,
   newest line first, each with its direction and verdict, and is rebuilt after every round. Every
   screen of every version links back to it.
@@ -41,29 +41,49 @@ to `.gitignore`.
 
 1. Read the log, if there is one, and tell the user where the evolution stands. Continue from
    there; a round the log holds no verdict for gets its verdict first.
-2. Build yourself a picture of the whole UI from the code: its screens, routes and main flows.
-   Where there is no UI yet, ask the user which screens the product has.
+2. Build yourself a picture of the whole UI from the code: its screens, routes and main flows,
+   and what each screen shows and lets the user do. That content and those functions are what a
+   mockup keeps; how far it keeps the current layout is decided per round. Where there is no UI
+   yet, ask the user which screens the product has.
 3. Unless the log names one, ask with `AskUserQuestion` which design skill to build with — the
    installed ones whose description covers visual design, or none. With none installed, skip the
    question. Load only the one chosen.
 
 ## Round: new lines
 
-1. **Scope.** Ask with `AskUserQuestion`, multi-select, which screens and flows the click dummy
+1. **Freedom.** Ask with `AskUserQuestion` how far this round may move away from the current UI:
+   - **Restyle** — same layout, new look: colours, type, spacing, shapes.
+   - **Rework the layout** — same screens and content, arranged however serves them best;
+     nothing of the current arrangement is fixed, from the grid down to how a list is shown.
+   - **Rethink the screens** — only what the product does stays; screens may be split, merged or
+     regrouped.
+   - **Your call** — you choose freedom, scope and directions yourself and ask nothing more this
+     round. Pick a freedom and directions the log has not tried yet, keep the last round's scope
+     or take the main flows, and say what you chose once the lines are built.
+
+   Where there is no UI yet, offer only the last two.
+2. **Scope.** Ask with `AskUserQuestion`, multi-select, which screens and flows the click dummy
    covers this round — the main ones from your picture of the UI, up to four options, the last
-   round's scope first. Every round asks this anew.
-2. **Directions.** Work out nine clearly distinct style directions, none of them already a line
-   in the log — each a name and one line on palette, type, density and shape. Ask in one
-   `AskUserQuestion` call: three questions of three directions each, one pick per question.
-3. **Build** one line per pick: the next free line numbers, stage `01`.
+   round's scope first. Every round asks this anew, unless it is Your call.
+3. **Directions.** Work out nine clearly distinct directions, none of them already a line in the
+   log. Beyond a restyle they differ in layout as much as in look. Describe each so that someone
+   without design vocabulary can picture it: a name — a style people know by name, such as glass or
+   retro, where one fits — then one sentence on what the user sees and how it feels to use. No
+   colour codes, font names or design terms, and no word that fits every direction, such as
+   modern or clean. Give each option a `preview`: an ASCII sketch of one main screen in that
+   direction, with its look named in a few plain words below it. Ask in one `AskUserQuestion`
+   call: three questions of three directions each, one pick per question.
+4. **Build** one line per pick: the next free line numbers, stage `01`.
 
 ## Verdict
 
 After every round, ask with `AskUserQuestion`:
 
 - **Develop a version** — ask which one, usually the latest stage of a line; then what should
-  change, with two to four concrete changes you see in it as options; then the scope. Build it as
-  the next free stage of its line.
+  change, with up to three concrete changes you see in it as options — in layout as well as look,
+  unless the line is a restyle — and **Your call** as the last; then the scope. With Your call you
+  decide what changes, keep the version's scope, ask nothing more and say what you changed. Build
+  it as the next free stage of its line.
 - **New lines** — every line so far is discarded; start a round of new lines.
 - **Choose a version** — ask which one. Record it as chosen and stop.
 - **Stop** — record where the evolution stands and stop.

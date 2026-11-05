@@ -140,11 +140,14 @@ language; settings still missing are asked for.
 ```
 
 Evolves the visual design through click dummies in plain HTML and CSS, each with a light/dark
-switch. Per round it asks which screens to cover and offers nine style directions, three of which
-become lines in the directory the installed `v0-design` rule names: `01/01`, `02/01`, `03/01`. The
-user then develops one line stage by stage (`03/02`, `03/03`), discards them all for new lines, or
-chooses a version. An `index.html` lists every version to click through from. Built versions are
-never changed, and a log keeps the state across sessions.
+switch. Per round it asks how far the mockups may move away from the current UI — a new look only,
+a new layout, or screens rethought from what the product does — and which screens to cover. It then
+offers nine directions, each described in plain words with an ASCII sketch. Three of them become
+lines in the directory the installed `v0-design` rule names: `01/01`, `02/01`, `03/01`. With "Your
+call" it decides all of this itself for that round and asks nothing. The user then develops one
+line stage by stage (`03/02`, `03/03`), discards them all for new lines, or chooses a version. An
+`index.html` lists every version to click through from. Built versions are never changed, and a
+log keeps the state across sessions.
 
 ### Code audit – `/charter:code-audit`
 
