@@ -1,6 +1,6 @@
 ---
 name: mockups
-description: Evolves the project's visual design through click dummies — lets the user set how far the layout may change, offers sketched design directions or picks them itself, builds plain HTML/CSS mockups in numbered lines and stages, and develops the line the user picks until a design is chosen
+description: Evolves the project's visual design through click dummies — lets the user set how far the layout may change, offers sketched design directions or picks them itself, builds each line of plain HTML/CSS mockups with a fitting design skill from the ones the user allows, develops the line the user picks until a design is chosen, then writes the chosen one down
 disable-model-invocation: true
 ---
 
@@ -21,7 +21,7 @@ to `.gitignore`.
 - **Versions are immutable.** A mockup lives in `<mockup-dir>/NN/MM/` — `NN` the line, `MM` its
   stage, both two digits. Once built, a version is never changed; a new stage starts as a copy of
   the version it develops. Each version is complete on its own, with no stylesheet shared across
-  versions.
+  versions. A line the user throws out is deleted, never kept around.
 - **Plain HTML and CSS, no framework, no build step.** JavaScript only for the light/dark switch
   and for the clicks between screens. Every version opens from the file system.
 - **Light and dark in every version.** It follows the system setting and has a switch on every
@@ -29,25 +29,32 @@ to `.gitignore`.
 - **Build the scope, nothing more.** Every clickable element leads to a screen in scope or is
   visibly inert. Content is realistic, from the product's domain, never placeholder text.
 - **Touch nothing outside `<mockup-dir>/`** and `.gitignore` — the project's frontend least of all.
-- **The log keeps the state.** `<mockup-dir>/README.md` names the design skill in use and holds
-  one row per version: line, stage, the version it was developed from, freedom, direction, scope,
-  who chose them — the user or you, what changed, the user's verdict — discarded, developed,
-  chosen. Answers given in chat do not survive the session, so record each one as it comes.
-- **One page to navigate from.** `<mockup-dir>/index.html` lists every version, grouped by line,
-  newest line first, each with its direction and verdict, and is rebuilt after every round. Every
-  screen of every version links back to it.
+- **One subagent per version.** Each version is built by its own subagent, which loads only the
+  design skill of its line, so one skill's rules do not bleed into another line; you load none.
+  Give it these ground rules, your picture of the UI, the scope, the freedom, the direction — or,
+  for a new stage, the version it copies and what changes — and the directory to build in. Start
+  the subagents of one round together.
+- **The log keeps the state.** `<mockup-dir>/README.md` names the design skills the user allows
+  and holds one row per version: line, stage, the version it was developed from, design skill,
+  freedom, direction, scope, who chose them — the user or you, what changed. Each line is in the
+  race, thrown out or chosen; rows of a thrown-out line stay, so its direction is not offered
+  again. Answers given in chat do not survive the session, so record each one as it comes.
+- **One page to navigate from.** `<mockup-dir>/index.html` lists the lines in the race, newest
+  line first, each with its direction and design skill, its latest stage on top and the earlier
+  ones below. It is rebuilt after every change. Every screen of every version links back to it.
 
 ## Start
 
 1. Read the log, if there is one, and tell the user where the evolution stands. Continue from
-   there; a round the log holds no verdict for gets its verdict first.
+   there.
 2. Build yourself a picture of the whole UI from the code: its screens, routes and main flows,
    and what each screen shows and lets the user do. That content and those functions are what a
    mockup keeps; how far it keeps the current layout is decided per round. Where there is no UI
    yet, ask the user which screens the product has.
-3. Unless the log names one, ask with `AskUserQuestion` which design skill to build with — the
-   installed ones whose description covers visual design, or none. With none installed, skip the
-   question. Load only the one chosen.
+3. Unless the log names them, ask with `AskUserQuestion`, multi-select, which design skills may
+   build lines — the installed ones whose description covers visual design, up to four options;
+   the user names any other in the free-text answer. None ticked means no design skill. With none
+   installed, skip the question. Ask again only when the user wants to change the choice.
 
 ## Round: new lines
 
@@ -66,32 +73,48 @@ to `.gitignore`.
    covers this round — the main ones from your picture of the UI, up to four options, the last
    round's scope first. Every round asks this anew, unless it is Your call.
 3. **Directions.** Work out nine clearly distinct directions, none of them already a line in the
-   log. Beyond a restyle they differ in layout as much as in look. Describe each so that someone
-   without design vocabulary can picture it: a name — a style people know by name, such as glass or
-   retro, where one fits — then one sentence on what the user sees and how it feels to use. No
+   log or close to one. Beyond a restyle they differ in layout as much as in look. Describe each so that someone
+   without design vocabulary can picture it: a name — a style people know by name, such as glass
+   or retro, where one fits — then one sentence on what the user sees and how it feels to use. No
    colour codes, font names or design terms, and no word that fits every direction, such as
    modern or clean. Give each option a `preview`: an ASCII sketch of one main screen in that
    direction, with its look named in a few plain words below it. Ask in one `AskUserQuestion`
    call: three questions of three directions each, one pick per question.
-4. **Build** one line per pick: the next free line numbers, stage `01`.
+4. **Build** one line per pick: the next free line numbers, stage `01`. Give each line the allowed
+   design skill that fits its direction best, a different one per line as far as the allowed ones
+   reach.
 
-## Verdict
+## How to go on
 
-After every round, ask with `AskUserQuestion`:
+After every round, ask with `AskUserQuestion` how to go on:
 
 - **Develop a version** — ask which one, usually the latest stage of a line; then what should
   change, with up to three concrete changes you see in it as options — in layout as well as look,
   unless the line is a restyle — and **Your call** as the last; then the scope. With Your call you
   decide what changes, keep the version's scope, ask nothing more and say what you changed. Build
-  it as the next free stage of its line.
-- **New lines** — every line so far is discarded; start a round of new lines.
-- **Choose a version** — ask which one. Record it as chosen and stop.
-- **Stop** — record where the evolution stands and stop.
+  it as the next free stage of its line, with the design skill of its line.
+- **New lines** — a round of new lines; the lines in the race stay in it.
+- **Throw out lines** — ask with `AskUserQuestion`, multi-select, which lines go: the oldest
+  lines in the race, up to four; the user names any other in the free-text answer. Delete them,
+  record them as thrown out and ask again how to go on. Starting over is throwing out all, then
+  new lines.
+- **Choose a version** — ask which one. Record it as chosen and hand it over, as below.
 
-Record the verdict in the log before you build anything further.
+Record each answer in the log before you build anything further. The user can stop at any point;
+the log is current.
 
 ## When a version is chosen
 
-Name the chosen version and its path. A design that is agreed now ends what the `v0-design` rule
-exists for: say that the user can delete it from the project. Committing anything is the user's
-call.
+The mockups are throwaway and may not even be in the repository; what the frontend is built from
+is a description of the chosen version.
+
+1. Ask where it goes and offer `docs/design.md` — never inside `<mockup-dir>/`. If the file
+   exists, show what would change and ask before replacing it.
+2. Write it from the chosen version's CSS and HTML, as values, not adjectives: colours in light
+   and dark, type, spacing, radii and borders, the recurring components, and the layout of each
+   screen in scope. Anything the version leaves open is named as open, not invented.
+3. Name the chosen version, its path and the description. A design that is agreed now ends what
+   the `v0-design` rule exists for: say that the user can delete it from the project. Committing
+   anything is the user's call.
+4. Offer to delete `<mockup-dir>/` — the description holds the result. If git ignores it, say that
+   nothing brings it back.

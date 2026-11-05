@@ -140,14 +140,18 @@ language; settings still missing are asked for.
 ```
 
 Evolves the visual design through click dummies in plain HTML and CSS, each with a light/dark
-switch. Per round it asks how far the mockups may move away from the current UI — a new look only,
-a new layout, or screens rethought from what the product does — and which screens to cover. It then
-offers nine directions, each described in plain words with an ASCII sketch. Three of them become
-lines in the directory the installed `v0-design` rule names: `01/01`, `02/01`, `03/01`. With "Your
-call" it decides all of this itself for that round and asks nothing. The user then develops one
-line stage by stage (`03/02`, `03/03`), discards them all for new lines, or chooses a version. An
-`index.html` lists every version to click through from. Built versions are never changed, and a
-log keeps the state across sessions.
+switch. It first asks which installed design skills may build. Per round it asks how far the
+mockups may move away from the current UI — a new look only, a new layout, or screens rethought
+from what the product does — and which screens to cover, then offers nine directions, each
+described in plain words with an ASCII sketch. Three of them become lines in the directory the
+installed `v0-design` rule names: `01/01`, `02/01`, `03/01`, each built by its own subagent with
+the allowed design skill that fits its direction, a different one per line. With "Your call" it
+decides the round itself and asks nothing. The user then develops a line stage by stage (`03/02`,
+`03/03`), adds new lines, throws out the lines they no longer want — deleted, not kept — or
+chooses a version. The skill writes the chosen one down as a design description outside the
+mockups, `docs/design.md` by default, for the frontend to be built from, and offers to delete the
+mockups. An `index.html` lists the lines in the race, each with its design skill, to click through
+from. Built versions are never changed, and a log keeps the state across sessions.
 
 ### Code audit – `/charter:code-audit`
 
