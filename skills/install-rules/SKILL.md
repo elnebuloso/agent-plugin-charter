@@ -42,6 +42,8 @@ A rule may carry settings the project chooses, written as `<UPPERCASE_NAME>`:
   common alternative `docs/guide`.
 - `<MOCKUP_DIRECTORY>` — where design mockups live. Default `docs/mockups`,
   common alternative `design/mockups`.
+- `<DESIGN_FILE>` — the description of the agreed visual design. Default
+  `docs/design.md`, common alternative `DESIGN.md`.
 - `<PRIVATE_DIRECTORY>` — the user's private notes, kept from the agent. Default
   `docs/private`, common alternative `docs/notes`.
 
@@ -91,7 +93,8 @@ reason, and still installed when passed as an argument. That is the case when
 the tool it is written for is missing from this system — a plugin whose skills
 are not available, a command not on the `PATH` — or when it is written for a
 phase the project has left, such as a version below 1.0 for a project at 1.0 or
-later. Nothing else counts: a practice the project has not taken up yet, such as
+later, or a design not agreed yet where the rule for an agreed one is installed.
+Nothing else counts: a practice the project has not taken up yet, such as
 ADRs, or a file not written yet, such as a `Makefile`, is what installing the
 rule may be for.
 

@@ -72,6 +72,7 @@ claude plugin update charter@elnebuloso
 | `adrs.md` | Projects that keep architecture decision records | Read the decision record before working in an area, plus when and how to write one |
 | `backlog.md` | Users of the Backlog.md CLI | How task entries are written |
 | `chat.md` | Anyone who wants to see that the rules are loaded | A marker at the start of every final chat reply |
+| `design.md` | Web frontends whose visual design is agreed and written down | Styling only with the values in the design file; what it leaves open is asked, not invented |
 | `handbook.md` | Projects with product documentation in the repo | How handbook pages are written: what earns a sentence, what never goes in, examples and screenshots |
 | `make.md` | Projects driven by a `Makefile` | Run the target instead of the command behind it, and what a command has to earn before it becomes one |
 | `private-notes.md` | Anyone who keeps notes in the repo the agent must not touch | A directory the agent never reads, searches or edits, unless the user names a file |
@@ -86,8 +87,9 @@ Some rules carry settings the project chooses at the first install: the rules th
 `adrs`, `backlog`, `handbook`, `superpowers` — ask for the language that prose is written in, one
 answer per rule; `adrs` also asks where the ADRs live (default `docs/decisions`), `handbook` where
 its pages live (default `docs/handbook`), `v0-design` where the mockups live (default
-`docs/mockups`), `private-notes` where the private notes live (default `docs/private`). The answers
-stay in the installed files, and updates keep them.
+`docs/mockups`), `design` where the agreed design is written down (default `docs/design.md`),
+`private-notes` where the private notes live (default `docs/private`). The answers stay in the
+installed files, and updates keep them.
 
 `private-notes` is a limit the model keeps, not a lock. A search can still reach the directory by
 accident; keeping it in `.gitignore` hides it from searches that honour that file, ripgrep among
@@ -103,7 +105,7 @@ outright — adjust the path to the one you chose:
 ```
 
 The `v0-` rules hold for one phase of a project and are deleted from it when that phase ends: at
-1.0, or for `v0-design` once the visual design is agreed.
+1.0, or for `v0-design` once the visual design is agreed — then `design` takes over.
 
 ## Skills
 
@@ -149,9 +151,12 @@ the allowed design skill that fits its direction, a different one per line. With
 decides the round itself and asks nothing. The user then develops a line stage by stage (`03/02`,
 `03/03`), adds new lines, throws out the lines they no longer want — deleted, not kept — or
 chooses a version. The skill writes the chosen one down as a design description outside the
-mockups, `docs/design.md` by default, for the frontend to be built from, and offers to delete the
-mockups. An `index.html` lists the lines in the race, each with its design skill, to click through
-from. Built versions are never changed, and a log keeps the state across sessions.
+mockups — the file the `design` rule names, `docs/design.md` by default — plus a component page
+next to it that shows every kind of element the frontend uses in the chosen design, one below the
+other. It says which screens the description does not cover, points to installing `design` in
+place of `v0-design`, and offers to delete the mockups. An `index.html` lists the lines in the
+race, each with its design skill, to click through from. Built versions are never changed, and a
+log keeps the state across sessions.
 
 ### Code audit – `/charter:code-audit`
 
