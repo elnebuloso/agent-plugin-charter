@@ -158,6 +158,19 @@ place of `v0-design`, and offers to delete the mockups. An `index.html` lists th
 race, each with its design skill, to click through from. Built versions are never changed, and a
 log keeps the state across sessions.
 
+### UX analysis – `/charter:ux-analysis`
+
+```text
+/charter:ux-analysis
+```
+
+Analyses a web application's usability and structure as a whole — from screenshots of every page
+and state and from using the application itself — and writes a target concept: problems, areas
+and layouts where the analysis calls for them, a target sitemap, the purpose of every page,
+components, and a prioritised plan. Asks the language of the document first; writes it with the
+screenshots to `docs/ux/`; changes no file of the project. The visual design is left to
+`/charter:mockups`.
+
 ### Code audit – `/charter:code-audit`
 
 ```text
