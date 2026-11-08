@@ -12,8 +12,8 @@ On the genre itself — templates, tooling, background — see
   `Superseded by` line.
 - **`<ADR_DIRECTORY>/README.md` is the index**: one table row per ADR — number linked to its
   file, title, status, and for a superseded one the ADRs that replace it. The commit that adds,
-  deletes or retitles an ADR, or changes its status, updates the index too. The index is no ADR;
-  the rules below are not about it.
+  deletes or retitles an ADR, or changes its status, updates the index too, and creates it where it
+  is missing. The index is no ADR; the rules below are not about it.
 - **ADRs record the user's decisions, not yours.** Write one only when asked, or once the user
   has agreed in chat to the decision and the alternatives it rejects. Status stays `Proposed`
   until the user accepts it.

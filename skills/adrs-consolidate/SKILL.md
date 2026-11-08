@@ -67,6 +67,10 @@ Write `_consolidate/02-mapping.md` with:
 Replace only where one question needs more than one ADR to answer. A new ADR bundles one coherent
 decision, not a whole topic area. Several focused ADRs beat one catch-all.
 
+Where every ADR in force is kept, there is nothing to draft: phase 3 is the code check alone, and
+phase 4 skips steps 1 and 2 after its questions — step 3 then makes only the changes approved for
+kept ADRs, and the index is still written in step 4.
+
 ## Phase 3: Drafts and check against the code
 
 Once the user has approved the structure:
