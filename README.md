@@ -203,9 +203,10 @@ around, and what it could not decide without asking. Changes only the pages the 
 /charter:adrs-consolidate
 ```
 
-Merges the ADRs in the directory the installed `adrs` rule names into a set that holds only the
-decisions in force today; superseded ones drop out and the old files are deleted. Works in phases
-and stops for approval before anything is deleted.
+Consolidates the ADRs in the directory the installed `adrs` rule names so that one ADR answers each
+question: where a decision is spread over partly superseded ADRs, a new ADR replaces them whole and
+they stay as superseded. ADRs that stand on their own keep their number, no ADR is deleted, and the
+index is brought up to date. Works in phases and stops for approval before any ADR changes.
 
 ### Backlog tasks from a code audit – `/charter:backlog-from-code-audit`
 

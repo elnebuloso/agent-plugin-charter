@@ -1,23 +1,24 @@
 ---
 name: adrs-consolidate
-description: Consolidates the project's ADRs into a clean set that holds only the decisions in force today — superseded ones drop out, and the old ADRs are deleted.
+description: Consolidates the project's ADRs so that one ADR answers each question — partly superseded ADRs are replaced whole by new ones, the old ones stay as superseded, and the index is brought up to date. Deletes no ADR.
 disable-model-invocation: true
 ---
 
 # Consolidate the ADRs
 
-The goal is a clean set of ADRs that describes only what is in force now. Superseded decisions are
-not carried over; they drop out. The decisions still in force are merged into new ADRs along
-coherent lines. Where an ADR was only partly superseded, only the part still in force is carried
-over. The old ADRs are deleted at the end. You deliver analyses, drafts and questions — the user
-makes the decisions.
+The goal is a set of ADRs in which one ADR in force answers each question. Where a decision is
+spread over several ADRs — an older one partly superseded by a newer one, or one decision split
+across two — a new ADR restates everything still in force on that question and supersedes them
+whole. ADRs that already stand on their own stay as they are, number and file included. No ADR is
+deleted: a superseded one keeps its number and gains a `Superseded by` line, as `adrs.md` asks.
+You deliver analyses, drafts and questions — the user makes the decisions.
 
 `<adr-dir>` below is the directory the project's ADR rule names —
 `.claude/rules/agent-plugin-charter/adrs.md`. Without that file, ask the user where the ADRs live.
 
 ## Ground rules for every phase
 
-- Change or delete no existing ADR before phase 4.
+- Change no existing ADR before phase 4, and delete none at all.
 - Change no production code.
 - Invent no rationale. Where the ADRs do not say *why*, mark it `[OPEN: rationale missing]`.
 - Mark uncertainty, contradictions and interpretation as such — do not smooth them over.
@@ -36,45 +37,49 @@ with:
 2. The supersession graph (Mermaid is fine), including *partial* supersessions — a newer ADR
    that changes only one aspect of an older one.
 3. Anomalies: missing or inconsistent statuses, implicit supersessions (a newer ADR contradicts
-   an older one without referencing it), ADRs without a recognisable decision, and files that are
-   not ADRs at all — an index, a template. Those are left alone; "the old ADRs" below means
-   exactly the rows of the table.
+   an older one without referencing it), ADRs without a recognisable decision, an ADR still
+   `Proposed` that the code already carries out, and files that are not ADRs — the index, a
+   template. "The old ADRs" below means exactly the rows of the table.
 4. A description of the ADR format used so far — structure, file names, numbering — so the new
    ADRs match it. Where it departs from `adrs.md`, name the gap; the new ADRs follow the rule.
 5. Per ADR, every name and link `adrs.md` forbids an ADR to hold — paths, identifiers, links
    into the code, documentation or task tracker — so the drafts in phase 3 describe the thing
    instead.
+6. Whether `<adr-dir>/README.md` exists as the index `adrs.md` describes, and where it is
+   missing an ADR or disagrees with one.
 
 ## Phase 2: New structure
 
-Write `_consolidate/02-mapping.md` proposing how the old ADRs merge into new ones:
+Write `_consolidate/02-mapping.md` with:
 
-- The planned new ADRs, each with a working title and a short description.
-- The mapping old → new. Every old ADR appears exactly once: assigned to a new ADR, or marked
-  "dropped" with the reason — fully superseded, component no longer exists. For a partly
-  superseded ADR, say which part still holds and is carried over. An ADR still `Proposed` is not
-  in force: it is never merged into an accepted one, and whether it is carried over as a proposal
-  of its own or dropped goes to the user as a question.
-- The new ADRs continue the existing number series. `adrs.md` forbids reusing a number, and code,
-  documents and tickets citing an old number would otherwise point at a different decision.
+- The planned new ADRs, each with a working title, a short description and the question it
+  answers.
+- The mapping. Every old ADR in force appears exactly once, as one of:
+  - **kept** — it answers its question alone; it stays as it is.
+  - **replaced** — by one or more new ADRs, which together carry over every part still in force;
+    say which part goes where.
+- ADRs already fully superseded need nothing and are listed once, as such.
+- An ADR still `Proposed` is not in force: it is never merged into an accepted one. Whether it is
+  accepted as it is, carried into a new ADR as a proposal of its own, or left as it is goes to the
+  user as a question.
+- The new ADRs take the next free numbers.
 
-A new ADR bundles one coherent decision, not a whole topic area. Several focused ADRs beat one
-catch-all.
+Replace only where one question needs more than one ADR to answer. A new ADR bundles one coherent
+decision, not a whole topic area. Several focused ADRs beat one catch-all.
 
 ## Phase 3: Drafts and check against the code
 
 Once the user has approved the structure:
 
 1. Draft the new ADRs in `_consolidate/new/`, in the format from phase 1. Each holds at least
-   context, decision, rejected alternatives (only the ones that matter), consequences, and an
-   **Origin** section naming each source ADR by number, title and date, without a link — the files
-   are gone once phase 4 is done. The metadata table carries the consolidation's date and status
-   `Accepted` only once the user has approved it in phase 4 — one carried over as a proposal stays
-   `Proposed`. A superseded earlier decision may appear among the rejected alternatives in one
-   sentence, where the reason it was superseded helps explain the current one. Mark each draft as
-   *clear*, *interpreted* or *contradictory*.
-2. Check every decision against the actual codebase and write `_consolidate/03-code-check.md`,
-   one verdict per new ADR:
+   context, decision, rejected alternatives (only the ones that matter) and consequences, and a
+   `Supersedes` line naming the ADRs it replaces. The metadata table carries the consolidation's
+   date and status `Accepted` only once the user has approved it in phase 4 — one carried over as
+   a proposal stays `Proposed`. A superseded earlier decision may appear among the rejected
+   alternatives in one sentence, where the reason it was superseded helps explain the current one.
+   Mark each draft as *clear*, *interpreted* or *contradictory*.
+2. Check every new ADR, and every kept one, against the actual codebase and write
+   `_consolidate/03-code-check.md`, one verdict per ADR:
    - ✅ consistent — with evidence: file and location
    - ⚠️ deviation — what the code actually does, with file references
    - ❓ not verifiable — e.g. a process or infrastructure decision
@@ -83,9 +88,10 @@ Once the user has approved the structure:
 
 ## Phase 4: Questions and completion
 
-Write `_consolidate/04-questions.md` with every open point from phases 2 and 3, each as a concrete
+Write `_consolidate/04-questions.md` with every open point from phases 1 to 3, each as a concrete
 question to the user with your assessment and the options. For every deviation the question is:
-adjust the ADR, or adjust the code?
+adjust the ADR, or adjust the code? For a kept ADR that holds names `adrs.md` forbids, the
+question is whether to reword it in place.
 
 Once the user has answered:
 
@@ -95,14 +101,19 @@ Once the user has answered:
    supply either is stated as not recorded.
 2. Show the user the finished ADRs, then stop. Their OK approves them — set the status as phase 3
    describes — and only then:
-3. Delete all old ADRs and move the new ADRs into `<adr-dir>/`.
-4. List the deviations the user chose to resolve by adjusting the code as tasks in
+3. Move the new ADRs into `<adr-dir>/`. In each replaced ADR, set the status to `Superseded` and
+   its `Superseded by` line to the new ADRs, replacing any partial wording such as "for …". Change
+   nothing else in it. Make the changes the user approved for kept ADRs.
+4. Write or update the index `<adr-dir>/README.md` as `adrs.md` describes.
+5. List the deviations the user chose to resolve by adjusting the code as tasks in
    `_consolidate/05-followups.md` — do not implement them.
-5. Check that no file in the project still points at a deleted ADR — a link to its file, or its
-   number cited in a code comment or a document — and list what you find. The Origin sections of
-   the new ADRs name them on purpose and are left out.
-6. Ask the user to carry the follow-ups wherever their tasks live, then stop. Once they confirm,
-   delete `_consolidate/` with everything in it — its results now live in the new ADRs and the
-   follow-ups, and a leftover `_consolidate/` would make the next run resume a finished one.
+6. Search the project for ADR numbers and links to ADR files outside `<adr-dir>/`, and list each
+   one that names a superseded ADR or the wrong ADR for what it cites. Documents describing the
+   current state — architecture notes, the handbook, code comments — are the ones to correct;
+   records of the past, such as finished tasks and changelogs, stay as they are.
+7. Ask the user to carry the follow-ups and the corrections wherever their tasks live, then stop.
+   Once they confirm, delete `_consolidate/` with everything in it — its results now live in the
+   ADRs, the index and the follow-ups, and a leftover `_consolidate/` would make the next run
+   resume a finished one.
 
 Begin with phase 1.
