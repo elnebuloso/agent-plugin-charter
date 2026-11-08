@@ -26,7 +26,8 @@ You deliver analyses, drafts and questions — the user makes the decisions.
   already exists, a run is in progress: read what is there, tell the user where it stands, and
   wait for their OK before going on. Answers the user gave in chat do not survive the session
   unless they are in a file, so record each one in `04-questions.md` as it comes.
-- After every phase: a short summary, then stop and wait for the user's OK.
+- After every phase: a short summary, then stop and wait for the user's OK. An answer to a
+  question is not that OK: ask for it in a sentence of its own and go on only once it is given.
 
 ## Phase 1: Inventory
 
@@ -35,7 +36,8 @@ with:
 
 1. A table: ID, title, date, status, supersedes, superseded by, topic area.
 2. The supersession graph (Mermaid is fine), including *partial* supersessions — a newer ADR
-   that changes only one aspect of an older one.
+   that changes only one aspect of an older one — and every ADR, accepted or proposed, that
+   answers part of another's question without naming it.
 3. Anomalies: missing or inconsistent statuses, implicit supersessions (a newer ADR contradicts
    an older one without referencing it), ADRs without a recognisable decision, an ADR still
    `Proposed` that the code already carries out, and files that are not ADRs — the index, a
@@ -55,7 +57,8 @@ Write `_consolidate/02-mapping.md` with:
 - The planned new ADRs, each with a working title, a short description and the question it
   answers.
 - The mapping. Every old ADR in force appears exactly once, as one of:
-  - **kept** — it answers its question alone; it stays as it is.
+  - **kept** — it answers its question alone: no other ADR, accepted or proposed, named in it or
+    not, answers part of that question. It stays as it is.
   - **replaced** — by one or more new ADRs, which together carry over every part still in force;
     say which part goes where.
 - ADRs already fully superseded need nothing and are listed once, as such.
@@ -63,6 +66,10 @@ Write `_consolidate/02-mapping.md` with:
   accepted as it is, carried into a new ADR as a proposal of its own, or left as it is goes to the
   user as a question.
 - The new ADRs take the next free numbers.
+
+A question whose answer changes the mapping — a `Proposed` ADR above all — is asked now, before
+the structure is approved, and recorded in `04-questions.md`. Every other question waits for
+phase 4.
 
 Replace only where one question needs more than one ADR to answer. A new ADR bundles one coherent
 decision, not a whole topic area. Several focused ADRs beat one catch-all.
@@ -78,10 +85,15 @@ Once the user has approved the structure:
 1. Draft the new ADRs in `_consolidate/new/`, in the format from phase 1. Each holds at least
    context, decision, rejected alternatives (only the ones that matter) and consequences, and a
    `Supersedes` line naming the ADRs it replaces. The metadata table carries the consolidation's
-   date and status `Accepted` only once the user has approved it in phase 4 — one carried over as
-   a proposal stays `Proposed`. A superseded earlier decision may appear among the rejected
+   date; a draft's status is `Proposed` and becomes `Accepted` in phase 4, step 2 — one carried
+   over as a proposal stays `Proposed`. A superseded earlier decision may appear among the rejected
    alternatives in one sentence, where the reason it was superseded helps explain the current one.
    Mark each draft as *clear*, *interpreted* or *contradictory*.
+
+   Every sentence that gives a reason traces to an old ADR or to an answer recorded in
+   `04-questions.md`; a rejected alternative the old ADRs do not name is not added. Before showing
+   the drafts, list each reason with its source in `03-code-check.md`. A reason without a source
+   becomes `[OPEN: rationale missing]`.
 2. Check every new ADR, and every kept one, against the actual codebase and write
    `_consolidate/03-code-check.md`, one verdict per ADR:
    - ✅ consistent — with evidence: file and location
@@ -94,8 +106,8 @@ Once the user has approved the structure:
 
 Write `_consolidate/04-questions.md` with every open point from phases 1 to 3, each as a concrete
 question to the user with your assessment and the options. For every deviation the question is:
-adjust the ADR, or adjust the code? For a kept ADR that holds names `adrs.md` forbids, the
-question is whether to reword it in place.
+adjust the ADR, or adjust the code? For a kept ADR that holds names `adrs.md` forbids, or a
+statement another ADR has made untrue, the question is whether to reword it in place.
 
 Once the user has answered:
 
@@ -115,7 +127,8 @@ Once the user has answered:
    one that names a superseded ADR or the wrong ADR for what it cites. Documents describing the
    current state — architecture notes, the handbook, code comments — are the ones to correct;
    records of the past, such as finished tasks and changelogs, stay as they are.
-7. Ask the user to carry the follow-ups and the corrections wherever their tasks live, then stop.
+7. Ask the user to carry the follow-ups and the corrections wherever their tasks live, then stop;
+   create the tasks yourself only when they ask you to, by the project's rules for its tracker.
    Once they confirm, delete `_consolidate/` with everything in it — its results now live in the
    ADRs, the index and the follow-ups, and a leftover `_consolidate/` would make the next run
    resume a finished one.
