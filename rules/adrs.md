@@ -5,7 +5,15 @@ On the genre itself — templates, tooling, background — see
 
 - **ADRs live in `<ADR_DIRECTORY>/NNNN-<topic>.md`.** Numbers are assigned in order and never
   reused or renumbered — a superseded ADR keeps its number and gains a `Superseded by` line, the
-  replacement takes the next free one.
+  replacement takes the next free one and a `Supersedes` line.
+- **An ADR is superseded whole, never in part.** When a decision changes part of an ADR, the new
+  one restates everything still in force on that question, so one ADR per question is enough to
+  read. An ADR that held several decisions is superseded by several new ones, each named in its
+  `Superseded by` line.
+- **`<ADR_DIRECTORY>/README.md` is the index**: one table row per ADR — number linked to its
+  file, title, status, and for a superseded one the ADRs that replace it. The commit that adds,
+  deletes or retitles an ADR, or changes its status, updates the index too. The index is no ADR;
+  the rules below are not about it.
 - **ADRs record the user's decisions, not yours.** Write one only when asked, or once the user
   has agreed in chat to the decision and the alternatives it rejects. Status stays `Proposed`
   until the user accepts it.

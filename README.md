@@ -69,7 +69,7 @@ claude plugin update charter@elnebuloso
 | Rule | For whom | What it covers |
 | --- | --- | --- |
 | `base.md` | Any project, any language | Working principles, design and git conventions, no push unless asked |
-| `adrs.md` | Projects that keep architecture decision records | Read the decision record before working in an area, plus when and how to write one |
+| `adrs.md` | Projects that keep architecture decision records | Read the decision record before working in an area, plus when and how to write one, supersede one and keep the index |
 | `backlog.md` | Users of the Backlog.md CLI | How task entries are written |
 | `chat.md` | Anyone who wants to see that the rules are loaded | A marker at the start of every final chat reply |
 | `design.md` | Web frontends whose visual design is agreed and written down | Styling only with the values in the design file; what it leaves open is asked, not invented |
