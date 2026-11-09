@@ -39,7 +39,8 @@ make_repo current "$current_file"
 make_repo dirty "$old_file"
 echo "edited by hand" >>"$work/tree/dirty/CLAUDE.md"
 make_repo broken "$(echo "$old_file" | sed '/GUIDELINES END/d')"
-make_repo noblock "$(printf '# Project\n\nNo Backlog.md here.\n')"
+printf -v no_block_file '# Project\n\nNo Backlog.md here.'
+make_repo noblock "$no_block_file"
 make_repo reversed "$(printf '# Project\n\n<!-- BACKLOG.MD GUIDELINES END -->\n\n%s\n' "$(echo "$old_block" | sed '/GUIDELINES END/d')")"
 make_repo detached "$old_file"
 git -C "$work/tree/detached" checkout -q --detach

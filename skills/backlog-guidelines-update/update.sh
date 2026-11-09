@@ -49,26 +49,31 @@ replace_block() {
 }
 
 commit() {
-  local file=$1 versions=$2 dir name
+  local file=$1 versions=$2 dir name error rev branch
   dir=$(dirname "$file")
   name=$(basename "$file")
 
   if ! git -C "$dir" commit -q -m "$commit_message" -- "$name" >"$tmp/error" 2>&1; then
-    report "updated, commit failed" "$file" "$versions" "$(tr '\n' ' ' <"$tmp/error")"
+    error=$(tr '\n' ' ' <"$tmp/error")
+    report "updated, commit failed" "$file" "$versions" "$error"
     return
   fi
-  report "committed" "$file" "$versions" "$(git -C "$dir" rev-parse --short HEAD) on $(git -C "$dir" branch --show-current)"
+  rev=$(git -C "$dir" rev-parse --short HEAD)
+  branch=$(git -C "$dir" branch --show-current)
+  report "committed" "$file" "$versions" "$rev on $branch"
 }
 
 while IFS= read -r -d '' file; do
   grep -qF "$start_marker" "$file" || continue
   dir=$(dirname "$file")
   name=$(basename "$file")
-  versions="$(version_of "$file") -> $target_version"
+  from_version=$(version_of "$file")
+  versions="$from_version -> $target_version"
 
   # A symlink hides its target's uncommitted changes from git diff, and the commit would miss the target.
   if [ -L "$file" ]; then
-    report "skipped" "$file" "$versions" "symlink to $(readlink "$file")"
+    link_target=$(readlink "$file")
+    report "skipped" "$file" "$versions" "symlink to $link_target"
     continue
   fi
   if ! markers_balanced "$file"; then
@@ -79,7 +84,8 @@ while IFS= read -r -d '' file; do
   if git -C "$dir" ls-files --error-unmatch -- "$name" >/dev/null 2>&1; then
     in_git=true
     # Detached means a rebase, bisect or checkout in progress; a commit there would get lost or mixed in.
-    if [ -z "$(git -C "$dir" branch --show-current)" ]; then
+    branch=$(git -C "$dir" branch --show-current)
+    if [ -z "$branch" ]; then
       report "skipped" "$file" "$versions" "detached HEAD"
       continue
     fi
