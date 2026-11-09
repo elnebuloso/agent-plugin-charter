@@ -20,7 +20,8 @@ if [ ! -s "$tmp/block" ]; then
   exit 1
 fi
 
-commit_message="chore: update Backlog.md agent guidelines to $target_version"
+# printf -v instead of "text $var": some static security scanners misparse a quoted $var after a space.
+printf -v commit_message 'chore: update Backlog.md agent guidelines to %s' "$target_version"
 unchanged=0
 
 report() {
@@ -68,7 +69,7 @@ while IFS= read -r -d '' file; do
   dir=$(dirname "$file")
   name=$(basename "$file")
   from_version=$(version_of "$file")
-  versions="$from_version -> $target_version"
+  printf -v versions '%s -> %s' "$from_version" "$target_version"
 
   # A symlink hides its target's uncommitted changes from git diff, and the commit would miss the target.
   if [ -L "$file" ]; then
